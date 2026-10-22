@@ -93,6 +93,31 @@
         </div>
 
         <div class="keyboard-panel"><div class="keyboard-heading"><div><h3>Clavier virtuel AZERTY</h3><p class="muted">Repère les touches pendant que tu écris.</p></div><span class="keyboard-layout-label">FRANÇAIS · AZERTY</span></div><div id="virtual-keyboard" class="virtual-keyboard" aria-label="Illustration du clavier AZERTY"></div></div>
+        <div id="result-modal" class="result-modal" hidden aria-hidden="true">
+          <button type="button" class="result-backdrop" id="result-backdrop" aria-label="Fermer les résultats"></button>
+          <section class="result-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-result-title">
+            <button type="button" class="result-close" id="result-close" aria-label="Fermer">×</button>
+            <div class="result-confetti" aria-hidden="true"><span>✦</span><span>●</span><span>✧</span><span>◆</span><span>✦</span><span>●</span><span>◆</span><span>✧</span></div>
+            <div class="result-modal-content">
+              <div class="result-character" id="result-character" aria-hidden="true">🥳</div>
+              <div class="result-copy">
+                <span class="result-kicker" id="modal-result-kicker">DÉFI TERMINÉ</span>
+                <h2 id="modal-result-title">Félicitations !</h2>
+                <p id="modal-result-subtitle">Tu as fait un super travail.</p>
+                <div class="result-score-box">
+                  <div class="result-score-ring" id="result-score-ring"><strong id="modal-result-percent">90<small>%</small></strong><span>de réussite</span></div>
+                  <div class="result-score-details">
+                    <div><span class="result-detail-icon success">✓</span><p><strong id="modal-result-success">9</strong><span id="modal-result-success-label">mots réussis</span></p></div>
+                    <div><span class="result-detail-icon failure">×</span><p><strong id="modal-result-fail">1</strong><span id="modal-result-fail-label">mot manqué</span></p></div>
+                    <div><span class="result-detail-icon time">◷</span><p><strong id="modal-result-time">00:30</strong><span>temps écoulé</span></p></div>
+                  </div>
+                </div>
+                <p class="result-encouragement" id="modal-result-message">Continue comme ça, tu progresses à chaque exercice !</p>
+                <div class="result-modal-actions"><button type="button" class="primary-button" id="modal-retry-button">↻ Recommencer</button><button type="button" class="secondary-button" id="modal-menu-button">Retour à l'entraînement</button></div>
+              </div>
+            </div>
+          </section>
+        </div>
         <div id="result-banner" class="result-banner" hidden><div class="result-symbol">✓</div><div><h3>Exercice terminé !</h3><p id="result-message">Voici ton résultat.</p></div><button class="primary-button" id="retry-button">Recommencer <span>→</span></button></div>
       </section>
 
