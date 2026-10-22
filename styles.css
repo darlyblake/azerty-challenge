@@ -165,3 +165,62 @@ tbody tr:first-child .rank-badge{background:#fff0d7;color:#aa711c}
   .art-card-main{width:84%;padding:14px}
   .art-keys{gap:4px}
 }
+
+
+/* Espace jouable — interface légère, sans accumulation de cartes */
+#training-view{max-width:1180px;margin:0 auto}
+.practice-welcome{padding:25px 0 18px;border-bottom:1px solid #e4e9f1}
+.practice-welcome h2{font-size:23px;margin-bottom:5px}
+.session-note{display:flex;align-items:baseline;gap:7px;color:#8792a6;font-size:11px}
+.session-note b{font:800 18px Manrope,sans-serif;color:#315fc8}
+.setup-panel{background:transparent;border:0;border-radius:0;box-shadow:none;padding:22px 0 19px;margin:0;border-bottom:1px solid #e4e9f1}
+.setup-panel .panel-heading{align-items:center}
+.setup-panel .panel-heading h3{font-size:14px}
+.control-grid{gap:18px;margin-top:17px}
+.field select{background:#fff;border-color:#dfe5ef;border-radius:6px;min-height:42px}
+.setup-footer{border-top:0;margin-top:16px;padding-top:0}
+.setup-footer p{font-size:11px}
+.setup-footer .primary-button{min-height:42px}
+.metrics-grid{background:#fff;border:1px solid #e6ebf3;border-radius:8px;gap:0;margin:0 0 24px;padding:6px 0}
+.metrics-grid .metric-card{border:0;border-radius:0;box-shadow:none;background:transparent;padding:11px 20px}
+.metrics-grid .metric-card+.metric-card{border-left:1px solid #edf0f5}
+.metrics-grid .metric-value{font-size:24px;margin:7px 0 2px}
+.metrics-grid .metric-icon{width:22px;height:22px}
+.typing-panel{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;margin:0 0 23px}
+.typing-heading{margin-bottom:13px}
+.typing-heading h3{font-size:17px!important}
+.text-display{min-height:142px;background:#fff;border:1px solid #e1e7f1;border-radius:8px;padding:24px 25px;font-size:19px;line-height:2}
+.text-display.flash-word{min-height:142px}
+.typing-input{min-height:84px;background:#fff;border-radius:7px;border-color:#dfe5ef;font-size:14px}
+.typing-footer{font-size:11px;margin-top:9px}
+.keyboard-panel{background:transparent;border:0;border-top:1px solid #e4e9f1;border-radius:0;box-shadow:none;padding:20px 0 10px;margin:0}
+.keyboard-heading{margin-bottom:13px}
+.keyboard-heading h3{font-size:13px!important}
+.keyboard-heading .muted{font-size:11px;margin:4px 0 0}
+.virtual-keyboard{max-width:880px}
+.key{height:33px;background:#fff;border-color:#e1e6ef}
+.result-banner{border-radius:7px;box-shadow:none;margin:17px 0}
+@media(max-width:1050px){
+ .metrics-grid .metric-card{padding:10px 13px}
+ .text-display{padding:20px;font-size:17px}
+}
+@media(max-width:700px){
+ .practice-welcome{padding:20px 0 14px}
+ .practice-welcome h2{font-size:20px}
+ .session-note{font-size:9px;gap:5px}
+ .session-note b{font-size:16px}
+ .setup-panel{padding:18px 0}
+ .control-grid{gap:12px;margin-top:14px}
+ .setup-footer{gap:10px}
+ .setup-footer p{line-height:1.5}
+ .metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 21px}
+ .metrics-grid .metric-card{padding:12px 14px}
+ .metrics-grid .metric-card:nth-child(3){border-left:0}
+ .metrics-grid .metric-card:nth-child(n+3){border-top:1px solid #edf0f5}
+ .typing-heading h3{font-size:15px!important}
+ .text-display,.text-display.flash-word{min-height:115px;padding:16px;font-size:15px;line-height:1.9}
+ .typing-input{min-height:75px}
+ .keyboard-panel{padding-top:17px}
+ .key-row{gap:3px}
+ .key{height:29px}
+}
