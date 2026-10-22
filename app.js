@@ -49,17 +49,16 @@
     }
     if (type === "text") {
       const text = texts[level][Math.floor(Math.random()*texts[level].length)];
-      if(level === "beginner") return text;
-      return text + "  123 456 7890 ! ? ; : , . % + = ( ) & é @ #";
+      return text + "  1234567890 ² & é \" ' ( - è _ ç à ) = + ^ $ ù * ; : ! , ? . / < > % £ ° § @ #";
     }
     const pool = words[level].join(" ").split(/\s+/);
     const count = level === "beginner" ? 90 : level === "intermediate" ? 75 : 65;
     const out = [];
     for(let i=0;i<count;i++) out.push(pool[Math.floor(Math.random()*pool.length)]);
     // Des séquences de chiffres et de signes sont ajoutées à tous les exercices de mots.
-    const extras = ["123","456","7890","2026","!","?",":",";",",",".","%","+","=","(",")","&","é","à","ç","ù","£","°","§","/","*"];
-    for(let i=0;i<Math.ceil(count/12);i++) out.splice(Math.min(out.length,i*12+6),0,extras[Math.floor(Math.random()*extras.length)]);
-    return out.join(" ");
+    // Chaque série de mots fait aussi pratiquer les chiffres et les symboles du clavier AZERTY.
+    const symbolsAndNumbers = ["1234567890", "² & é \" ' ( - è _ ç à ) = +", "^ $ ù * ; : ! , ? . / < > %", "£ ° § @ #"];
+    return out.join(" ") + " " + symbolsAndNumbers.join(" ");
   }
   function renderText(value) {
     const typed = $("typing-input").value;
