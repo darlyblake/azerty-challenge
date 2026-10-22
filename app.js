@@ -286,6 +286,11 @@
     learnIndex++;
     showLearnTarget();
   }
+  // Place les modales directement sous body pour éviter que la mise en page de l’accueil
+  // (illustration, overflow et grilles) ne les recouvre sur les petits écrans.
+  document.body.appendChild($("name-entry"));
+  document.body.appendChild($("path-selection"));
+
   function enterApp(name, destination) {
     currentPlayer=(name||"").trim().slice(0,30);
     if(!currentPlayer)return;
