@@ -395,3 +395,6 @@ body > #path-selection .path-card{min-width:0;overflow-wrap:anywhere}
   body > #path-selection .path-grid{grid-template-columns:1fr;gap:8px}
   body > #path-selection .path-card{min-height:68px;padding:10px 12px}
 }
+
+/* S'assurer que les boutons du parcours reçoivent bien les clics sur mobile */
+body > #path-selection .path-card{position:relative;z-index:1;pointer-events:auto;touch-action:manipulation;cursor:pointer}
