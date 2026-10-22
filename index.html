@@ -8,7 +8,7 @@
   <title>AZERTY Challenge — Entraînement clavier</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261022-6">
+  <link rel="stylesheet" href="styles.css?v=20261022-7">
 </head>
 <body>
 
@@ -64,6 +64,7 @@
       <a class="brand" href="#accueil" aria-label="AZERTY Challenge accueil"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">AZERTY <b>CHALLENGE</b></span></a>
       <div class="side-label">ESPACE D'ENTRAÎNEMENT</div>
       <button class="nav-item active" data-view="training"><span class="nav-icon">⌨</span> Entraînement</button>
+      <button class="nav-item" data-view="skills"><span class="nav-icon">🧩</span> Informatique pratique</button>
       <button class="nav-item" data-view="learn"><span class="nav-icon">☝</span> Position des doigts</button>
       <button class="nav-item" data-view="history"><span class="nav-icon">◷</span> Mes résultats</button>
       <div class="sidebar-tip"><div class="tip-icon">✦</div><strong>Le bon réflexe</strong><p>Regarde l'écran, pas tes doigts. La précision vient avant la vitesse.</p></div>
@@ -164,9 +165,16 @@
       </section>
 
       <section id="history-view" hidden><div class="history-intro"><h2>Ta progression</h2><p class="muted">Tes résultats sont enregistrés uniquement sur cet ordinateur.</p></div><div class="metrics-grid history-summary"><div class="metric-card"><div class="metric-top"><span>SESSIONS</span><span class="metric-icon blue">▤</span></div><div class="metric-value" id="history-total">0</div><div class="metric-note">Exercices terminés</div></div><div class="metric-card"><div class="metric-top"><span>MEILLEURE VITESSE</span><span class="metric-icon green">↗</span></div><div class="metric-value" id="history-best">0</div><div class="metric-note">Mots par minute</div></div><div class="metric-card"><div class="metric-top"><span>PRÉCISION MOYENNE</span><span class="metric-icon purple">◎</span></div><div class="metric-value" id="history-accuracy">0<small>%</small></div><div class="metric-note">Toutes les sessions</div></div></div><div class="panel leaderboard-panel"><div class="panel-heading"><div><span class="step-label">CLASSEMENT LOCAL</span><h3>Meilleurs joueurs</h3><p class="muted">Classement calculé à partir des meilleurs résultats enregistrés sur cet appareil.</p></div></div><div class="table-wrap"><table><thead><tr><th>Rang</th><th>Joueur</th><th>Meilleur score</th><th>Sessions</th><th>Précision moy.</th></tr></thead><tbody id="leaderboard-table"></tbody></table></div><p id="empty-leaderboard" class="empty-state">Aucun joueur classé pour le moment. Termine un exercice pour apparaître ici.</p></div><div class="panel history-panel"><div class="panel-heading"><div><span class="step-label">HISTORIQUE PERSONNEL</span><h3 id="history-heading">Dernières sessions</h3></div><button class="secondary-button" id="clear-history">Effacer l'historique</button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Exercice</th><th>Niveau</th><th>Vitesse</th><th>Précision</th><th>Erreurs</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="empty-history" class="empty-state">Aucun résultat pour le moment. Termine un exercice pour commencer ton suivi.</p></div></section>
+
+      <section id="skills-view" class="skills-view" hidden>
+        <div class="skills-hero"><span class="step-label">ATELIER NUMÉRIQUE</span><h2>Apprendre l’informatique en pratiquant</h2><p>Des simulations, des quiz et des défis pour apprendre Windows, le matériel, la souris, la bureautique et la sécurité. Tout est simulé : ton vrai ordinateur ne sera pas modifié.</p><div class="skills-stats"><span><b id="skills-done">0</b> défis réussis</span><span><b id="skills-points">0</b> points gagnés</span></div></div>
+        <div class="skills-tabs" role="tablist"><button class="skill-tab active" data-skill="windows">Windows</button><button class="skill-tab" data-skill="hardware">Matériel</button><button class="skill-tab" data-skill="mouse">Souris</button><button class="skill-tab" data-skill="office">Bureautique</button><button class="skill-tab" data-skill="ports">Câbles & ports</button><button class="skill-tab" data-skill="security">Sécurité</button><button class="skill-tab" data-skill="troubleshoot">Dépannage</button></div>
+        <div id="skills-content" class="skills-content"></div>
+      </section>
       <footer class="footer"><span>AZERTY CHALLENGE <span class="footer-separator">·</span> Apprendre en pratiquant.</span><span>Sans compte · Données stockées sur cet appareil</span></footer>
     </main>
   </div>
-  <script src="app.js?v=20261022-6" defer></script>
+  <script src="app.js?v=20261022-7" defer></script>
+  <script src="modules.js?v=20261022-1" defer></script>
 </body>
 </html>
