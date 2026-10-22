@@ -353,3 +353,31 @@ body.immersive-play .result-modal{z-index:2000}
 @media(min-width:1100px){.landing-copy:has(.path-selection:not([hidden])){width:min(100%,900px)}.landing-main:has(.path-selection:not([hidden])){grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr)}}
 @media(max-width:650px){.path-grid{grid-template-columns:1fr}.path-card{min-height:78px}.landing-tag{font-size:10px}.landing-copy h1{font-size:clamp(32px,9vw,46px)}}
 [hidden]{display:none!important}
+
+
+/* Dialogues modaux : saisie du nom puis choix du parcours */
+.modal-overlay:not([hidden]){position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(14,25,46,.58);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);overflow-y:auto;animation:modalFadeIn .18s ease both}
+.dialog-panel{position:relative;width:min(100%,470px);max-height:calc(100dvh - 40px);overflow-y:auto;background:#fff;border:1px solid rgba(255,255,255,.75);border-radius:22px;padding:clamp(24px,5vw,38px);box-shadow:0 28px 90px rgba(7,20,45,.28);color:#182641;animation:modalRise .22s ease both}
+.name-dialog{width:min(100%,440px)}
+.dialog-close{position:absolute;right:17px;top:15px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:#f1f4f9;color:#66748b;font-size:24px;line-height:1;cursor:pointer}
+.dialog-close:hover{background:#e6ecf7;color:#182641}
+.dialog-eyebrow{display:inline-block;margin-bottom:12px;color:#3568e8;font-size:10px;font-weight:800;letter-spacing:1.5px}
+.name-dialog h2{margin:0 34px 10px 0;font:800 clamp(25px,5vw,32px)/1.2 Manrope,sans-serif;letter-spacing:-.8px}
+.dialog-description{margin:0 0 24px;color:#718098;font-size:13px;line-height:1.7}
+.player-form{display:grid;gap:10px}
+.player-form label{color:#35445e;font-size:12px;font-weight:700}
+.player-form input{width:100%;min-height:49px;border:1px solid #dbe3f0;border-radius:11px;padding:0 14px;background:#fbfcff;color:#182641;font:500 14px 'DM Sans',sans-serif;outline:none}
+.player-form input:focus{border-color:#5d83ed;box-shadow:0 0 0 3px #3568e81c}
+.player-form .primary-button{width:100%;min-height:48px;justify-content:center;margin-top:5px}
+.name-error{margin:10px 0 0;color:#c33d56;font-size:12px}
+.path-dialog{width:min(100%,760px);padding:clamp(22px,4vw,34px)}
+.path-selection{margin:0;animation:none}
+.path-selection-heading{padding-right:30px}
+.path-selection-heading h2{font-size:clamp(23px,4vw,30px);margin-top:9px}
+.path-selection-heading p{margin-bottom:20px}
+.path-grid{gap:10px}
+.path-card{min-height:80px}
+.change-name{margin-top:18px}
+@keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes modalRise{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:520px){.modal-overlay:not([hidden]){padding:12px;align-items:center}.dialog-panel{max-height:calc(100dvh - 24px);border-radius:18px;padding:25px 19px}.path-grid{grid-template-columns:1fr;gap:8px}.path-card{min-height:70px;padding:10px 12px}.path-selection-heading h2{font-size:23px}.path-selection-heading p{font-size:12px}}
