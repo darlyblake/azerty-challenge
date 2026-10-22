@@ -315,17 +315,23 @@
     $("player-name").focus();
     entry.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
-  $("player-form").addEventListener("submit",e=>{
-    e.preventDefault();
+  function showPathSelection(){
     const name=$("player-name").value.trim();
     if(!name){$("name-error").hidden=false;$("player-name").focus();return;}
     currentPlayer=name.slice(0,30);
     try{localStorage.setItem(playerKey,currentPlayer);}catch(_){}
+    $("current-player-label").textContent="Joueur : "+currentPlayer;
+    $("name-error").hidden=true;
     $("name-entry").hidden=true;
     $("path-selection").hidden=false;
     $("landing-start").hidden=true;
     $("landing-history").hidden=true;
-    $("path-selection").scrollIntoView({behavior:"smooth",block:"nearest"});
+    $("path-selection").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  $("player-continue").addEventListener("click",showPathSelection);
+  $("player-form").addEventListener("submit",e=>{
+    e.preventDefault();
+    showPathSelection();
   });
   document.querySelectorAll("[data-launch]").forEach(button=>button.addEventListener("click",()=>{
     enterApp(currentPlayer,button.dataset.launch);
