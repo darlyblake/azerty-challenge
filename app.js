@@ -41,8 +41,8 @@
         "wxcvbn",
         "0123456789",
         "&é\"'(-è_çà)=+",
-        "^$ù*;:!,?./<>%",
-        "²£°§"
+        "^$ù*;:!,?./<>%\\\\",
+        "²£°§€@#{}[]|~"
       ];
       const shuffled = groups.map(group => group.split("").sort(() => Math.random() - .5).join(""));
       return shuffled.join("   ");
@@ -104,7 +104,8 @@
   }
   function startFlash() {
     stopTimer(); flashMode = true; active = true; finished = false; startedAt = Date.now(); endAt = 0;
-    const pool = [...words[$("difficulty").value]];
+    const level = $("difficulty").value;
+    const pool = $("exercise-type").value === "flash" ? [...words[level]] : [...words[level]];
     for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
     flashWords = pool.slice(0, 10); flashIndex = 0; flashScore = 0; errors = 0;
     $("result-banner").hidden = true; $("flash-status").hidden = false; $("text-display").classList.add("flash-word");
