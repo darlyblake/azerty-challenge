@@ -1,5 +1,5 @@
-const CACHE_NAME = "azerty-challenge-v9";
-const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./assets/icon.svg"];
+const CACHE_NAME = "azerty-challenge-v10";
+const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./assets/icon.svg", "./modules.js"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
