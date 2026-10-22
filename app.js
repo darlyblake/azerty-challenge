@@ -286,14 +286,25 @@
     learnIndex++;
     showLearnTarget();
   }
-  function enterApp(name) {
+  function enterApp(name, destination) {
     currentPlayer=(name||"").trim().slice(0,30);
-    if(!currentPlayer){$("name-error").hidden=false;return;}
+    if(!currentPlayer)return;
     try{localStorage.setItem(playerKey,currentPlayer);}catch(_){}
     $("current-player-label").textContent="Joueur : "+currentPlayer;
     $("current-player-label").hidden=false;
     $("landing-view").hidden=true; $("app-shell").hidden=false;
-    switchView("training"); reset();
+    if(destination==="keyboard"){
+      switchView("training"); reset();
+      $("page-title").textContent="Clavier AZERTY";
+    } else {
+      const moduleNav=document.querySelector('[data-view="skills"]');
+      if(moduleNav)moduleNav.click();
+      const tab=document.querySelector('.skill-tab[data-skill="'+destination+'"]');
+      if(tab)tab.click();
+      const titles={windows:"Windows",hardware:"Matériel informatique",mouse:"Souris",office:"Bureautique",ports:"Câbles et ports",security:"Sécurité numérique",troubleshoot:"Dépannage"};
+      $("page-title").textContent=titles[destination]||"Informatique pratique";
+    }
+    window.scrollTo({top:0,behavior:"smooth"});
   }
   $("landing-start").addEventListener("click",()=>{
     const entry=$("name-entry");
@@ -308,7 +319,24 @@
     e.preventDefault();
     const name=$("player-name").value.trim();
     if(!name){$("name-error").hidden=false;$("player-name").focus();return;}
-    enterApp(name);
+    currentPlayer=name.slice(0,30);
+    try{localStorage.setItem(playerKey,currentPlayer);}catch(_){}
+    $("name-entry").hidden=true;
+    $("path-selection").hidden=false;
+    $("landing-start").hidden=true;
+    $("landing-history").hidden=true;
+    $("path-selection").scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  document.querySelectorAll("[data-launch]").forEach(button=>button.addEventListener("click",()=>{
+    enterApp(currentPlayer,button.dataset.launch);
+  }));
+  $("change-name").addEventListener("click",()=>{
+    $("path-selection").hidden=true;
+    $("name-entry").hidden=false;
+    $("landing-start").hidden=false;
+    $("landing-history").hidden=false;
+    $("player-name").value=currentPlayer;
+    $("player-name").focus();
   });
   $("landing-history").addEventListener("click",()=>{
     $("landing-view").hidden=true;
@@ -321,6 +349,9 @@
     stopTimer(); active=false; learnActive=false;
     $("app-shell").hidden=true; $("landing-view").hidden=false;
     $("name-entry").hidden=true;
+    $("path-selection").hidden=true;
+    $("landing-start").hidden=false;
+    $("landing-history").hidden=false;
     $("landing-start").textContent="Commencer →";
     $("landing-start").setAttribute("aria-expanded","false");
     window.scrollTo({top:0,behavior:"smooth"});
