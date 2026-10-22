@@ -11,7 +11,55 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
+
+  <section id="landing-view" class="landing-view">
+    <header class="landing-nav">
+      <a class="brand landing-brand" href="#accueil" aria-label="AZERTY Challenge accueil"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">AZERTY <b>CHALLENGE</b></span></a>
+      <span class="landing-tag"><span class="dot"></span> Entraînement clavier AZERTY</span>
+    </header>
+    <main class="landing-main">
+      <div class="landing-copy">
+        <span class="landing-kicker"><span>⌨</span> APPRENDS · PRATIQUE · PROGRESSE</span>
+        <h1>Chaque touche te rapproche de la <em>maîtrise.</em></h1>
+        <p>Apprends à placer tes doigts, améliore ta vitesse de frappe et mesure tes progrès. Un exercice après l’autre, à ton rythme.</p>
+        <div class="landing-actions">
+          <button id="landing-start" class="primary-button landing-primary">Commencer <span>→</span></button>
+          <button id="landing-history" class="secondary-button landing-secondary">Historique & classement <span>↗</span></button>
+        </div>
+        <div id="name-entry" class="name-entry" hidden>
+          <label for="player-name">Comment tu t'appelles ?</label>
+          <p>Ton nom apparaîtra dans ton historique et le classement de cet appareil.</p>
+          <form id="player-form" class="player-form">
+            <input id="player-name" name="player-name" type="text" maxlength="30" placeholder="Ex. : Darly" autocomplete="given-name" required>
+            <button type="submit" class="primary-button">Entrer <span>→</span></button>
+          </form>
+          <p id="name-error" class="name-error" hidden>Entre un nom pour continuer.</p>
+        </div>
+        <div class="landing-trust"><span>✓ Gratuit</span><span>✓ Sans compte</span><span>✓ Fonctionne hors connexion</span></div>
+      </div>
+      <div class="landing-art" aria-label="Illustration d'un clavier et d'un objectif de progression">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-card art-card-main">
+          <div class="art-card-top"><span class="art-live"></span><span>SESSION DE FRAPPE</span><span class="art-dots">•••</span></div>
+          <div class="art-big-number">AZ<span>ERTY</span></div>
+          <div class="art-mini-text">La précision avant la vitesse.</div>
+          <div class="art-keys"><span>A</span><span>Z</span><span>E</span><span>R</span><span>T</span><span>Y</span><span>U</span><span>I</span><span>O</span><span>P</span><span>Q</span><span>S</span><span>D</span><span class="art-key-highlight">F</span><span>G</span><span>H</span><span class="art-key-highlight">J</span><span>K</span><span>L</span><span>M</span></div>
+          <div class="art-progress"><span></span></div>
+          <div class="art-card-bottom"><span>ENTRAÎNEMENT</span><strong>À toi de jouer&nbsp; →</strong></div>
+        </div>
+        <div class="art-float art-float-score"><span class="float-icon">↗</span><div><strong>À ton rythme</strong><small>Progresse chaque jour</small></div></div>
+        <div class="art-float art-float-rank"><span class="float-trophy">♛</span><div><strong>Ton classement</strong><small>Compare tes scores</small></div></div>
+      </div>
+    </main>
+    <section class="landing-features">
+      <div><span class="feature-icon">⌨</span><strong>Entraîne-toi</strong><p>Mots, textes et défis chronométrés.</p></div>
+      <div><span class="feature-icon">☝</span><strong>Apprends les bons gestes</strong><p>Découvre la position de chaque doigt.</p></div>
+      <div><span class="feature-icon">♜</span><strong>Suis tes résultats</strong><p>Consulte ton historique et le classement.</p></div>
+    </section>
+    <footer class="landing-footer"><span>AZERTY CHALLENGE · Apprendre en pratiquant.</span><span>Les scores sont enregistrés sur cet appareil.</span></footer>
+  </section>
+
+  <div class="app-shell" id="app-shell" hidden>
     <aside class="sidebar">
       <a class="brand" href="#accueil" aria-label="AZERTY Challenge accueil"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">AZERTY <b>CHALLENGE</b></span></a>
       <div class="side-label">ESPACE D'ENTRAÎNEMENT</div>
@@ -23,7 +71,7 @@
     </aside>
 
     <main class="main-content">
-      <header class="topbar"><div><p class="eyebrow">CENTRE D'ENTRAÎNEMENT</p><h1 id="page-title">Prêt à progresser ?</h1></div><div class="topbar-right"><span class="desktop-pill"><span class="dot"></span> Mode ordinateur</span><button class="icon-button" id="install-button" hidden title="Installer l'application">⇩ <span>Installer</span></button></div></header>
+      <header class="topbar"><div><p class="eyebrow">CENTRE D'ENTRAÎNEMENT</p><h1 id="page-title">Prêt à progresser ?</h1></div><div class="topbar-right"><span id="current-player-label" class="player-label" hidden></span><button class="secondary-button return-home" id="return-home">Accueil</button><span class="desktop-pill"><span class="dot"></span> Mode ordinateur</span><button class="icon-button" id="install-button" hidden title="Installer l'application">⇩ <span>Installer</span></button></div></header>
 
       <section id="training-view">
         <div class="welcome-row"><div><h2>Chaque frappe compte.</h2><p class="muted">Entraîne-toi à ton rythme et mesure tes progrès.</p></div><div class="streak"><span class="streak-icon">⚡</span><div><b id="session-count">0</b><small>sessions terminées</small></div></div></div>
@@ -90,7 +138,7 @@
         </div>
       </section>
 
-      <section id="history-view" hidden><div class="history-intro"><h2>Ta progression</h2><p class="muted">Tes résultats sont enregistrés uniquement sur cet ordinateur.</p></div><div class="metrics-grid history-summary"><div class="metric-card"><div class="metric-top"><span>SESSIONS</span><span class="metric-icon blue">▤</span></div><div class="metric-value" id="history-total">0</div><div class="metric-note">Exercices terminés</div></div><div class="metric-card"><div class="metric-top"><span>MEILLEURE VITESSE</span><span class="metric-icon green">↗</span></div><div class="metric-value" id="history-best">0</div><div class="metric-note">Mots par minute</div></div><div class="metric-card"><div class="metric-top"><span>PRÉCISION MOYENNE</span><span class="metric-icon purple">◎</span></div><div class="metric-value" id="history-accuracy">0<small>%</small></div><div class="metric-note">Toutes les sessions</div></div></div><div class="panel history-panel"><div class="panel-heading"><div><span class="step-label">HISTORIQUE PERSONNEL</span><h3>Dernières sessions</h3></div><button class="secondary-button" id="clear-history">Effacer l'historique</button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Exercice</th><th>Niveau</th><th>Vitesse</th><th>Précision</th><th>Erreurs</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="empty-history" class="empty-state">Aucun résultat pour le moment. Termine un exercice pour commencer ton suivi.</p></div></section>
+      <section id="history-view" hidden><div class="history-intro"><h2>Ta progression</h2><p class="muted">Tes résultats sont enregistrés uniquement sur cet ordinateur.</p></div><div class="metrics-grid history-summary"><div class="metric-card"><div class="metric-top"><span>SESSIONS</span><span class="metric-icon blue">▤</span></div><div class="metric-value" id="history-total">0</div><div class="metric-note">Exercices terminés</div></div><div class="metric-card"><div class="metric-top"><span>MEILLEURE VITESSE</span><span class="metric-icon green">↗</span></div><div class="metric-value" id="history-best">0</div><div class="metric-note">Mots par minute</div></div><div class="metric-card"><div class="metric-top"><span>PRÉCISION MOYENNE</span><span class="metric-icon purple">◎</span></div><div class="metric-value" id="history-accuracy">0<small>%</small></div><div class="metric-note">Toutes les sessions</div></div></div><div class="panel leaderboard-panel"><div class="panel-heading"><div><span class="step-label">CLASSEMENT LOCAL</span><h3>Meilleurs joueurs</h3><p class="muted">Classement calculé à partir des meilleurs résultats enregistrés sur cet appareil.</p></div></div><div class="table-wrap"><table><thead><tr><th>Rang</th><th>Joueur</th><th>Meilleur score</th><th>Sessions</th><th>Précision moy.</th></tr></thead><tbody id="leaderboard-table"></tbody></table></div><p id="empty-leaderboard" class="empty-state">Aucun joueur classé pour le moment. Termine un exercice pour apparaître ici.</p></div><div class="panel history-panel"><div class="panel-heading"><div><span class="step-label">HISTORIQUE PERSONNEL</span><h3 id="history-heading">Dernières sessions</h3></div><button class="secondary-button" id="clear-history">Effacer l'historique</button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Exercice</th><th>Niveau</th><th>Vitesse</th><th>Précision</th><th>Erreurs</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="empty-history" class="empty-state">Aucun résultat pour le moment. Termine un exercice pour commencer ton suivi.</p></div></section>
       <footer class="footer"><span>AZERTY CHALLENGE <span class="footer-separator">·</span> Apprendre en pratiquant.</span><span>Sans compte · Données stockées sur cet appareil</span></footer>
     </main>
   </div>
