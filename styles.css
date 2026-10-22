@@ -381,3 +381,17 @@ body.immersive-play .result-modal{z-index:2000}
 @keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalRise{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:520px){.modal-overlay:not([hidden]){padding:12px;align-items:center}.dialog-panel{max-height:calc(100dvh - 24px);border-radius:18px;padding:25px 19px}.path-grid{grid-template-columns:1fr;gap:8px}.path-card{min-height:70px;padding:10px 12px}.path-selection-heading h2{font-size:23px}.path-selection-heading p{font-size:12px}}
+
+
+/* Correctif mobile : les modales sont attachées à body et occupent l'écran visible */
+body > .modal-overlay:not([hidden]){position:fixed!important;inset:0!important;width:100vw;height:100vh;height:100dvh;min-height:0;margin:0!important;padding:16px;display:flex!important;align-items:center;justify-content:center;overflow-y:auto;z-index:2147483000!important;isolation:isolate}
+body > .modal-overlay:not([hidden]) > .dialog-panel{flex:0 1 auto;margin:auto;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-x:hidden;overscroll-behavior:contain}
+body > #path-selection.modal-overlay:not([hidden]) > .path-dialog{width:min(100%,720px)}
+body > #path-selection .path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+body > #path-selection .path-card{min-width:0;overflow-wrap:anywhere}
+@media(max-width:520px){
+  body > .modal-overlay:not([hidden]){padding:12px}
+  body > .modal-overlay:not([hidden]) > .dialog-panel{max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:24px 17px;border-radius:18px}
+  body > #path-selection .path-grid{grid-template-columns:1fr;gap:8px}
+  body > #path-selection .path-card{min-height:68px;padding:10px 12px}
+}
