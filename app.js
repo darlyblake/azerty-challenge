@@ -273,7 +273,7 @@
   let installPrompt=null;
   window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("install-button").hidden=false;});
   $("install-button").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("install-button").hidden=true;});
-  if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+  if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{}));
   buildKeyboard();
   try{currentPlayer=(localStorage.getItem(playerKey)||"").trim();}catch(_){currentPlayer="";}
   if(currentPlayer){$("player-name").value=currentPlayer;$("current-player-label").textContent="Joueur : "+currentPlayer;$("current-player-label").hidden=false;}
