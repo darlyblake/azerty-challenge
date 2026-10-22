@@ -99,6 +99,7 @@
   }
   function start() {
     if ($("exercise-type").value === "flash") { startFlash(); return; }
+    document.body.classList.add("immersive-play");
     flashMode = false;
     $("flash-status").hidden = true;
     $("text-display").classList.remove("flash-word");
@@ -110,6 +111,7 @@
     renderText(target); stats(); $("typing-input").scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function startFlash() {
+    document.body.classList.add("immersive-play");
     stopTimer(); flashMode = true; active = true; finished = false; startedAt = Date.now(); endAt = 0;
     const level = $("difficulty").value;
     const pool = $("exercise-type").value === "flash" ? [...words[level]] : [...words[level]];
@@ -193,6 +195,7 @@
     const modal=$("result-modal");
     modal.hidden=true; modal.setAttribute("aria-hidden","true");
     document.body.classList.remove("result-modal-open");
+    if(!active) document.body.classList.remove("immersive-play");
   }
   function onInput() {
     if(!active) return;
@@ -215,7 +218,7 @@
     if(current){let key = document.querySelector('.key[data-key="'+CSS.escape(current)+'"]'); if(key)key.classList.add("active");}
     if(typed.length>=target.length) finish();
   }
-  function reset() {closeResultModal();stopTimer();flashMode=false;$("flash-status").hidden=true;$("text-display").classList.remove("flash-word");$("wpm-label").textContent="MOTS / MINUTE";active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
+  function reset() {document.body.classList.remove("immersive-play");closeResultModal();stopTimer();flashMode=false;$("flash-status").hidden=true;$("text-display").classList.remove("flash-word");$("wpm-label").textContent="MOTS / MINUTE";active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
   function renderHistory() {
     const h=getHistory();
     const mine=h.filter(x=>(x.playerName||"Joueur précédent").toLocaleLowerCase()===currentPlayer.toLocaleLowerCase());
