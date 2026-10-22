@@ -127,14 +127,43 @@
     const item = {date:new Date().toISOString(),type:"flash",level:$("difficulty").value,duration:Math.round((endAt-startedAt)/1000),wpm:speed,accuracy:flashScore*10,errors:10-flashScore,chars:flashScore,playerName:currentPlayer||"Joueur anonyme"};
     const h = getHistory(); h.unshift(item); saveHistory(h); $("session-count").textContent = h.length;
     $("result-message").textContent = "Tu as réussi " + flashScore + " mot(s) sur 10 (" + (flashScore*10) + " %). " + (10-flashScore) + " mot(s) manqué(s).";
-    $("result-banner").hidden = false; $("start-button").textContent = "Rejouer les 10 mots →"; renderHistory();
+    $("result-banner").hidden = true; $("start-button").textContent = "Rejouer les 10 mots →";
+    showResultModal({percent:flashScore*10,success:flashScore,fail:10-flashScore,successLabel:"mot(s) réussi(s)",failLabel:"mot(s) manqué(s)",seconds:Math.round((endAt-startedAt)/1000),isFlash:true}); renderHistory();
   }
   function stopTimer(){ if(timerId){clearInterval(timerId);timerId=null;} }
   function finish() {
     if(finished) return; finished = true; active = false; endAt = Date.now(); stopTimer();
     $("typing-input").disabled = true; $("exercise-status").textContent = "Terminé"; $("live-indicator")?.classList.remove("running");
     const s = stats(); const item = {date:new Date().toISOString(),type:$("exercise-type").value,level:$("difficulty").value,duration,wpm:s.wpm,accuracy:s.accuracy,errors:s.errors,chars:s.typed};
-    item.playerName=currentPlayer||"Joueur anonyme"; const h = getHistory(); h.unshift(item); saveHistory(h); $("result-message").textContent = s.wpm+" mots/min · "+s.accuracy+" % de précision · "+s.errors+" erreur(s). Continue pour progresser !"; $("result-banner").hidden = false; $("session-count").textContent = h.length; $("start-button").textContent = "Faire un nouvel exercice →"; renderText(target); renderHistory();
+    item.playerName=currentPlayer||"Joueur anonyme"; const h = getHistory(); h.unshift(item); saveHistory(h); $("result-message").textContent = s.wpm+" mots/min · "+s.accuracy+" % de précision · "+s.errors+" erreur(s). Continue pour progresser !"; $("result-banner").hidden = true; $("session-count").textContent = h.length; $("start-button").textContent = "Faire un nouvel exercice →"; renderText(target);
+    showResultModal({percent:s.accuracy,success:s.correct,fail:s.errors,successLabel:"frappe(s) correcte(s)",failLabel:"erreur(s)",seconds:Math.round((endAt-(startedAt||endAt))/1000),isFlash:false}); renderHistory();
+  }
+  function showResultModal(result) {
+    const modal=$("result-modal");
+    const percent=Math.max(0,Math.min(100,Math.round(Number(result.percent)||0)));
+    const excellent=percent>=90, good=percent>=70, low=percent<50;
+    $("modal-result-kicker").textContent=excellent?"SUPER PERFORMANCE":good?"BEL EFFORT":"ON CONTINUE !";
+    $("modal-result-title").textContent=excellent?"Félicitations !":good?"Bien joué !":low?"Ne baisse pas les bras !":"Tu peux le faire !";
+    $("modal-result-title").className=excellent?"good-result":low?"low-result":"";
+    $("modal-result-subtitle").textContent=excellent?"Tu as fait un super travail !":good?"Tu progresses, continue sur cette lancée !":low?"Chaque essai t'aide à apprendre.":"Tu es sur la bonne voie, encore un effort !";
+    $("result-character").textContent=excellent?"🥳":good?"💃":low?"😭":"🥹";
+    $("modal-result-percent").innerHTML=percent+"<small>%</small>";
+    $("modal-result-success").textContent=String(result.success);
+    $("modal-result-success-label").textContent=result.successLabel;
+    $("modal-result-fail").textContent=String(result.fail);
+    $("modal-result-fail-label").textContent=result.failLabel;
+    const seconds=Math.max(0,Number(result.seconds)||0);
+    $("modal-result-time").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
+    $("modal-result-message").textContent=excellent?"Incroyable ! Garde ce rythme et bats ton record au prochain défi.":good?"Très bon travail ! Quelques essais de plus et tu vas encore progresser.":low?"Les erreurs font partie de l'apprentissage. Respire, recommence et fais de ton mieux.":"Tu as déjà avancé. Entraîne-toi encore et regarde ton score monter !";
+    modal.classList.toggle("is-disappointed",low);
+    modal.hidden=false; modal.setAttribute("aria-hidden","false");
+    document.body.classList.add("result-modal-open");
+    $("modal-retry-button").focus();
+  }
+  function closeResultModal() {
+    const modal=$("result-modal");
+    modal.hidden=true; modal.setAttribute("aria-hidden","true");
+    document.body.classList.remove("result-modal-open");
   }
   function onInput() {
     if(!active) return;
@@ -157,7 +186,7 @@
     if(current){let key = document.querySelector('.key[data-key="'+CSS.escape(current)+'"]'); if(key)key.classList.add("active");}
     if(typed.length>=target.length) finish();
   }
-  function reset() {stopTimer();flashMode=false;$("flash-status").hidden=true;$("text-display").classList.remove("flash-word");$("wpm-label").textContent="MOTS / MINUTE";active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
+  function reset() {closeResultModal();stopTimer();flashMode=false;$("flash-status").hidden=true;$("text-display").classList.remove("flash-word");$("wpm-label").textContent="MOTS / MINUTE";active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
   function renderHistory() {
     const h=getHistory();
     const mine=h.filter(x=>(x.playerName||"Joueur précédent").toLocaleLowerCase()===currentPlayer.toLocaleLowerCase());
@@ -264,7 +293,12 @@
     $("landing-start").setAttribute("aria-expanded","false");
     window.scrollTo({top:0,behavior:"smooth"});
   });
-  $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);$("learn-start-button").addEventListener("click",startLearnPractice);window.addEventListener("keydown",handleLearnKey);
+  $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);
+  $("modal-retry-button").addEventListener("click",()=>{closeResultModal();start();});
+  $("modal-menu-button").addEventListener("click",closeResultModal);
+  $("result-close").addEventListener("click",closeResultModal);$("result-backdrop").addEventListener("click",closeResultModal);
+  window.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("result-modal").hidden)closeResultModal();});
+  $("typing-input").addEventListener("input",onInput);$("learn-start-button").addEventListener("click",startLearnPractice);window.addEventListener("keydown",handleLearnKey);
   $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });
   $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
   document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
