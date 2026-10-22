@@ -16,6 +16,7 @@
       <a class="brand" href="#accueil" aria-label="AZERTY Challenge accueil"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">AZERTY <b>CHALLENGE</b></span></a>
       <div class="side-label">ESPACE D'ENTRAÎNEMENT</div>
       <button class="nav-item active" data-view="training"><span class="nav-icon">⌨</span> Entraînement</button>
+      <button class="nav-item" data-view="learn"><span class="nav-icon">☝</span> Position des doigts</button>
       <button class="nav-item" data-view="history"><span class="nav-icon">◷</span> Mes résultats</button>
       <div class="sidebar-tip"><div class="tip-icon">✦</div><strong>Le bon réflexe</strong><p>Regarde l'écran, pas tes doigts. La précision vient avant la vitesse.</p></div>
       <div class="sidebar-bottom"><span class="status-dot"></span> Fonctionne hors connexion <span class="version">v1.0</span></div>
@@ -45,6 +46,48 @@
 
         <div class="keyboard-panel panel"><div class="keyboard-heading"><div><h3>Clavier virtuel AZERTY</h3><p class="muted">Repère les touches pendant que tu écris.</p></div><span class="keyboard-layout-label">FRANÇAIS · AZERTY</span></div><div id="virtual-keyboard" class="virtual-keyboard" aria-label="Illustration du clavier AZERTY"></div></div>
         <div id="result-banner" class="result-banner" hidden><div class="result-symbol">✓</div><div><h3>Exercice terminé !</h3><p id="result-message">Voici ton résultat.</p></div><button class="primary-button" id="retry-button">Recommencer <span>→</span></button></div>
+      </section>
+
+      <section id="learn-view" hidden>
+        <div class="learn-intro">
+          <span class="step-label">APPRENTISSAGE GUIDÉ</span>
+          <h2>Apprends à placer tes doigts</h2>
+          <p class="muted">Avant de taper vite, apprends à utiliser le bon doigt pour chaque touche. Entraîne-toi quelques minutes chaque jour.</p>
+        </div>
+        <div class="panel learn-start-panel">
+          <div class="learn-section-title"><span class="learn-number">01</span><div><h3>La position de départ</h3><p>Pose doucement tes doigts sur la rangée du milieu du clavier AZERTY.</p></div></div>
+          <div class="home-row-visual" aria-label="Rangée de départ du clavier AZERTY">
+            <span class="finger-key pinky-left">Q</span><span class="finger-key ring-left">S</span><span class="finger-key middle-left">D</span><span class="finger-key index-left">F</span><span class="finger-key index-left">G</span><span class="finger-key index-right">H</span><span class="finger-key index-right">J</span><span class="finger-key middle-right">K</span><span class="finger-key ring-right">L</span><span class="finger-key pinky-right">M</span>
+          </div>
+          <div class="finger-legend">
+            <span><i class="legend-dot pinky"></i>Auriculaires</span><span><i class="legend-dot ring"></i>Annulaires</span><span><i class="legend-dot middle"></i>Majeurs</span><span><i class="legend-dot index"></i>Index</span>
+          </div>
+          <p class="learn-tip"><strong>Le repère important :</strong> les index reposent sur <b>F</b> et <b>J</b>. Sur de nombreux claviers, ces touches possèdent un petit relief qui permet de les retrouver sans regarder.</p>
+        </div>
+        <div class="panel">
+          <div class="learn-section-title"><span class="learn-number">02</span><div><h3>Quel doigt utilise quelle touche ?</h3><p>Chaque doigt s'occupe d'une zone. Reviens à la rangée de départ après chaque frappe.</p></div></div>
+          <div class="finger-grid">
+            <div class="finger-card"><span class="finger-chip pinky">Auriculaire gauche</span><strong>Q · A · W</strong><p>Le petit doigt gauche atteint les touches du bord gauche.</p></div>
+            <div class="finger-card"><span class="finger-chip ring">Annulaire gauche</span><strong>S · Z · X</strong><p>L'annulaire gauche se déplace autour de la touche S.</p></div>
+            <div class="finger-card"><span class="finger-chip middle">Majeur gauche</span><strong>D · E · C</strong><p>Le majeur gauche part de D pour atteindre les touches voisines.</p></div>
+            <div class="finger-card"><span class="finger-chip index">Index gauche</span><strong>F · R · T · G · V · B</strong><p>L'index gauche couvre une zone plus large au centre-gauche.</p></div>
+            <div class="finger-card"><span class="finger-chip index">Index droit</span><strong>J · U · Y · H · N</strong><p>L'index droit couvre le centre-droit. Le pouce droit peut appuyer sur Espace.</p></div>
+            <div class="finger-card"><span class="finger-chip middle">Majeur droit</span><strong>K · I · ,</strong><p>Le majeur droit part de K pour atteindre les touches voisines.</p></div>
+            <div class="finger-card"><span class="finger-chip ring">Annulaire droit</span><strong>L · O · ;</strong><p>L'annulaire droit part de L.</p></div>
+            <div class="finger-card"><span class="finger-chip pinky">Auriculaire droit</span><strong>M · P · ù</strong><p>Le petit doigt droit atteint les touches du bord droit.</p></div>
+          </div>
+          <p class="learn-tip"><strong>À retenir :</strong> utilise un pouce pour la barre d'espace, détends les épaules et évite de poser tout le poids des mains sur les poignets.</p>
+        </div>
+        <div class="panel finger-practice-panel">
+          <div class="learn-section-title"><span class="learn-number">03</span><div><h3>Exercice pratique : retrouve la touche</h3><p>Appuie sur la touche demandée au clavier. Tu as 10 touches à reconnaître.</p></div></div>
+          <div class="practice-box">
+            <span class="flash-caption">TOUCHE À TROUVER</span>
+            <strong id="learn-target" class="learn-target">F</strong>
+            <p id="learn-feedback" aria-live="polite">Clique sur « Commencer l'exercice », puis utilise ton clavier physique.</p>
+            <div class="learn-practice-meta"><span id="learn-progress">0 / 10</span><span id="learn-score">Réussites : 0</span></div>
+            <button class="primary-button" id="learn-start-button">Commencer l'exercice <span>→</span></button>
+          </div>
+        </div>
       </section>
 
       <section id="history-view" hidden><div class="history-intro"><h2>Ta progression</h2><p class="muted">Tes résultats sont enregistrés uniquement sur cet ordinateur.</p></div><div class="metrics-grid history-summary"><div class="metric-card"><div class="metric-top"><span>SESSIONS</span><span class="metric-icon blue">▤</span></div><div class="metric-value" id="history-total">0</div><div class="metric-note">Exercices terminés</div></div><div class="metric-card"><div class="metric-top"><span>MEILLEURE VITESSE</span><span class="metric-icon green">↗</span></div><div class="metric-value" id="history-best">0</div><div class="metric-note">Mots par minute</div></div><div class="metric-card"><div class="metric-top"><span>PRÉCISION MOYENNE</span><span class="metric-icon purple">◎</span></div><div class="metric-value" id="history-accuracy">0<small>%</small></div><div class="metric-note">Toutes les sessions</div></div></div><div class="panel history-panel"><div class="panel-heading"><div><span class="step-label">HISTORIQUE PERSONNEL</span><h3>Dernières sessions</h3></div><button class="secondary-button" id="clear-history">Effacer l'historique</button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Exercice</th><th>Niveau</th><th>Vitesse</th><th>Précision</th><th>Erreurs</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="empty-history" class="empty-state">Aucun résultat pour le moment. Termine un exercice pour commencer ton suivi.</p></div></section>
