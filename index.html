@@ -23,8 +23,8 @@
         <h1>Chaque touche te rapproche de la <em>maîtrise.</em></h1>
         <p>Apprends à placer tes doigts, améliore ta vitesse de frappe et mesure tes progrès. Un exercice après l’autre, à ton rythme.</p>
         <div class="landing-actions">
-          <button id="landing-start" class="primary-button landing-primary">Commencer <span>→</span></button>
-          <button id="landing-history" class="secondary-button landing-secondary">Historique & classement <span>↗</span></button>
+          <button type="button" id="landing-start" class="primary-button landing-primary" aria-expanded="false" aria-controls="name-entry">Commencer <span>→</span></button>
+          <button type="button" id="landing-history" class="secondary-button landing-secondary">Historique & classement <span>↗</span></button>
         </div>
         <div id="name-entry" class="name-entry" hidden>
           <label for="player-name">Comment tu t'appelles ?</label>
@@ -71,7 +71,7 @@
     </aside>
 
     <main class="main-content">
-      <header class="topbar"><div><p class="eyebrow">CENTRE D'ENTRAÎNEMENT</p><h1 id="page-title">Prêt à progresser ?</h1></div><div class="topbar-right"><span id="current-player-label" class="player-label" hidden></span><button class="secondary-button return-home" id="return-home">Accueil</button><span class="desktop-pill"><span class="dot"></span> Mode ordinateur</span><button class="icon-button" id="install-button" hidden title="Installer l'application">⇩ <span>Installer</span></button></div></header>
+      <header class="topbar"><div><p class="eyebrow">CENTRE D'ENTRAÎNEMENT</p><h1 id="page-title">Prêt à progresser ?</h1></div><div class="topbar-right"><span id="current-player-label" class="player-label" hidden></span><button type="button" class="secondary-button return-home" id="return-home">Accueil</button><span class="desktop-pill"><span class="dot"></span> Mode ordinateur</span><button class="icon-button" id="install-button" hidden title="Installer l'application">⇩ <span>Installer</span></button></div></header>
 
       <section id="training-view">
         <div class="welcome-row"><div><h2>Chaque frappe compte.</h2><p class="muted">Entraîne-toi à ton rythme et mesure tes progrès.</p></div><div class="streak"><span class="streak-icon">⚡</span><div><b id="session-count">0</b><small>sessions terminées</small></div></div></div>
