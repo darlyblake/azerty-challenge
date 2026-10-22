@@ -312,8 +312,26 @@
     $("landing-start").setAttribute("aria-expanded","true");
     $("name-error").hidden=true;
     $("player-name").value=currentPlayer || $("player-name").value || "";
-    $("player-name").focus();
-    entry.scrollIntoView({behavior:"smooth",block:"nearest"});
+    document.body.style.overflow="hidden";
+    setTimeout(()=>$("player-name").focus(),50);
+  });
+  $("name-close").addEventListener("click",()=>{
+    $("name-entry").hidden=true;
+    $("landing-start").setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+  });
+  $("name-entry").addEventListener("click",e=>{
+    if(e.target===$("name-entry")) $("name-close").click();
+  });
+  $("path-close").addEventListener("click",()=>{
+    $("path-selection").hidden=true;
+    $("name-entry").hidden=false;
+    $("player-name").value=currentPlayer;
+    document.body.style.overflow="hidden";
+    setTimeout(()=>$("player-name").focus(),50);
+  });
+  $("path-selection").addEventListener("click",e=>{
+    if(e.target===$("path-selection")) $("path-close").click();
   });
   function showPathSelection(){
     const name=$("player-name").value.trim();
@@ -326,7 +344,7 @@
     $("path-selection").hidden=false;
     $("landing-start").hidden=true;
     $("landing-history").hidden=true;
-    $("path-selection").scrollIntoView({behavior:"smooth",block:"start"});
+    document.body.style.overflow="hidden";
   }
   $("player-continue").addEventListener("click",showPathSelection);
   $("player-form").addEventListener("submit",e=>{
@@ -334,11 +352,13 @@
     showPathSelection();
   });
   document.querySelectorAll("[data-launch]").forEach(button=>button.addEventListener("click",()=>{
+    document.body.style.overflow="";
     enterApp(currentPlayer,button.dataset.launch);
   }));
   $("change-name").addEventListener("click",()=>{
     $("path-selection").hidden=true;
     $("name-entry").hidden=false;
+    document.body.style.overflow="hidden";
     $("landing-start").hidden=false;
     $("landing-history").hidden=false;
     $("player-name").value=currentPlayer;
@@ -356,6 +376,7 @@
     $("app-shell").hidden=true; $("landing-view").hidden=false;
     $("name-entry").hidden=true;
     $("path-selection").hidden=true;
+    document.body.style.overflow="";
     $("landing-start").hidden=false;
     $("landing-history").hidden=false;
     $("landing-start").textContent="Commencer →";
