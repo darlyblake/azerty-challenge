@@ -235,21 +235,34 @@
     switchView("training"); reset();
   }
   $("landing-start").addEventListener("click",()=>{
-    $("name-entry").hidden=false; $("player-name").focus(); $("name-error").hidden=true;
-    $("landing-start").textContent="Continuer →";
-    $("landing-start").onclick=()=>{$("player-form").requestSubmit();};
+    const entry=$("name-entry");
+    entry.hidden=false;
+    $("landing-start").setAttribute("aria-expanded","true");
+    $("name-error").hidden=true;
+    $("player-name").value=currentPlayer || $("player-name").value || "";
+    $("player-name").focus();
+    entry.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
-  $("player-form").addEventListener("submit",e=>{e.preventDefault();enterApp($("player-name").value);});
+  $("player-form").addEventListener("submit",e=>{
+    e.preventDefault();
+    const name=$("player-name").value.trim();
+    if(!name){$("name-error").hidden=false;$("player-name").focus();return;}
+    enterApp(name);
+  });
   $("landing-history").addEventListener("click",()=>{
-    $("landing-view").hidden=true; $("app-shell").hidden=false;
-    if(!currentPlayer){$("current-player-label").hidden=true;}
+    $("landing-view").hidden=true;
+    $("app-shell").hidden=false;
+    $("current-player-label").hidden=!currentPlayer;
     switchView("history");
+    window.scrollTo({top:0,behavior:"smooth"});
   });
   $("return-home").addEventListener("click",()=>{
     stopTimer(); active=false; learnActive=false;
     $("app-shell").hidden=true; $("landing-view").hidden=false;
-    $("name-entry").hidden=true; $("landing-start").textContent="Commencer →";
-    $("landing-start").onclick=null;
+    $("name-entry").hidden=true;
+    $("landing-start").textContent="Commencer →";
+    $("landing-start").setAttribute("aria-expanded","false");
+    window.scrollTo({top:0,behavior:"smooth"});
   });
   $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);$("learn-start-button").addEventListener("click",startLearnPractice);window.addEventListener("keydown",handleLearnKey);
   $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });
