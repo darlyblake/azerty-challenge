@@ -46,6 +46,7 @@
     }
     $("text-display").innerHTML = html;
   }
+  function formatTime(seconds) { return String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0"); }
   function stats() {
     const typed = $("typing-input").value;
     let correct = 0;
@@ -59,7 +60,7 @@
     $("errors").textContent = startedAt ? errors : "—";
     $("typed-progress").textContent = typed.length+" caractère"+(typed.length>1?"s":"")+" saisi"+(typed.length>1?"s":"");
     const remain = active ? Math.max(0,Math.ceil((duration*1000-(Date.now()-startedAt))/1000)) : (startedAt ? 0 : duration);
-    $("time-left").textContent = "00:"+String(remain).padStart(2,"0");
+    $("time-left").textContent = formatTime(remain);
     $("time-progress").style.width = (remain/duration*100)+"%";
     return {wpm,accuracy,errors,typed:typed.length,correct};
   }
@@ -88,7 +89,7 @@
     if(current){let key = document.querySelector('.key[data-key="'+CSS.escape(current)+'"]'); if(key)key.classList.add("active");}
     if(typed.length>=target.length) finish();
   }
-  function reset() {stopTimer();active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent="00:"+String(Number($("duration").value)).padStart(2,"0");$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
+  function reset() {stopTimer();active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
   function renderHistory() {
     const h=getHistory(); $("session-count").textContent=h.length; $("history-total").textContent=h.length; $("history-best").textContent=h.length?Math.max(...h.map(x=>x.wpm||0)):0; $("history-accuracy").innerHTML=(h.length?Math.round(h.reduce((a,x)=>a+(x.accuracy||0),0)/h.length):0)+'<small>%</small>';
     const levelNames={beginner:"Débutant",intermediate:"Intermédiaire",advanced:"Avancé"},typeNames={words:"Mots",text:"Texte"};
@@ -99,7 +100,7 @@
     const training=view==="training";$("training-view").hidden=!training;$("history-view").hidden=training;$("page-title").textContent=training?"Prêt à progresser ?":"Mes résultats";document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));if(!training)renderHistory();
   }
   $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);
-  $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent="00:"+String(Number($("duration").value)).padStart(2,"0");duration=Number($("duration").value);}});
+  $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
   document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
   $("clear-history").addEventListener("click",()=>{if(confirm("Effacer tous les résultats enregistrés sur cet ordinateur ?")){saveHistory([]);renderHistory();}});
   window.addEventListener("keydown",e=>{if(active&&document.activeElement!==$("typing-input")&&e.key.length===1){$("typing-input").focus();}});
