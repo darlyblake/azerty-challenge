@@ -20,6 +20,8 @@
   ];
   let target = "", startedAt = 0, endAt = 0, timerId = null, active = false, finished = false, duration = 30, errors = 0, lastLength = 0;
   let flashWords = [], flashIndex = 0, flashScore = 0, flashDeadline = 0, flashDuration = 5, flashMode = false;
+  const learnKeys = ["q","s","d","f","g","h","j","k","l","m","a","z","e","r","t","y","u","i","o","p","w","x","c","v","b","n"];
+  let learnActive = false, learnTarget = "f", learnIndex = 0, learnScore = 0, learnSequence = [];
   const historyKey = "azerty-challenge-history-v1";
   const getHistory = () => { try { return JSON.parse(localStorage.getItem(historyKey) || "[]"); } catch (_) { return []; } };
   const saveHistory = (items) => { try { localStorage.setItem(historyKey, JSON.stringify(items.slice(0,100))); } catch (_) {} };
@@ -151,9 +153,50 @@
     $("empty-history").hidden=h.length>0; $("history-table").parentElement.hidden=h.length===0;
   }
   function switchView(view) {
-    const training=view==="training";$("training-view").hidden=!training;$("history-view").hidden=training;$("page-title").textContent=training?"Prêt à progresser ?":"Mes résultats";document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));if(!training)renderHistory();
+    const training=view==="training", history=view==="history", learn=view==="learn";
+    $("training-view").hidden=!training; $("history-view").hidden=!history; $("learn-view").hidden=!learn;
+    $("page-title").textContent=training?"Prêt à progresser ?":history?"Mes résultats":"Position des doigts";
+    document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+    if(history)renderHistory();
+    if(!learn)learnActive=false;
   }
-  $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);
+  function startLearnPractice() {
+    learnActive=true; learnIndex=0; learnScore=0;
+    learnSequence=[...learnKeys].sort(()=>Math.random()-.5).slice(0,10);
+    $("learn-start-button").textContent="Recommencer l'exercice →";
+    $("learn-feedback").textContent="Regarde la lettre affichée, puis appuie sur cette touche.";
+    showLearnTarget();
+  }
+  function showLearnTarget() {
+    if(learnIndex>=learnSequence.length) {
+      learnActive=false;
+      $("learn-target").textContent="✓";
+      $("learn-feedback").textContent="Terminé ! Tu as réussi "+learnScore+" touche(s) sur 10. Recommence pour t'entraîner encore.";
+      $("learn-progress").textContent="10 / 10";
+      $("learn-score").textContent="Réussites : "+learnScore;
+      $("learn-start-button").textContent="Rejouer l'exercice →";
+      return;
+    }
+    learnTarget=learnSequence[learnIndex];
+    $("learn-target").textContent=learnTarget.toUpperCase();
+    $("learn-progress").textContent=learnIndex+" / 10";
+    $("learn-score").textContent="Réussites : "+learnScore;
+  }
+  function handleLearnKey(e) {
+    if(!learnActive || $("learn-view").hidden || e.ctrlKey || e.altKey || e.metaKey || e.key.length!==1) return;
+    e.preventDefault();
+    if(e.key.toLowerCase()===learnTarget) {
+      learnScore++;
+      $("learn-feedback").textContent="Bonne réponse ! Utilise le doigt indiqué, puis relâche.";
+      $("learn-feedback").className="learn-feedback good";
+    } else {
+      $("learn-feedback").textContent="Pas tout à fait. La touche attendue est "+learnTarget.toUpperCase()+". Essaie de te repérer sans regarder tes mains.";
+      $("learn-feedback").className="learn-feedback retry";
+    }
+    learnIndex++;
+    showLearnTarget();
+  }
+  $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);$("learn-start-button").addEventListener("click",startLearnPractice);window.addEventListener("keydown",handleLearnKey);
   $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });
   $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
   document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
