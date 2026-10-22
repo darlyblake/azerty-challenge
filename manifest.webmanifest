@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "AZERTY Challenge — Entraînement clavier",
+  "name": "AZERTY Challenge — Apprendre l’informatique",
   "short_name": "AZERTY Challenge",
-  "description": "Entraîne-toi à taper plus vite et avec précision sur un clavier AZERTY.",
+  "description": "Apprends le clavier, Windows, le matériel informatique, la bureautique et les bons réflexes numériques.",
   "lang": "fr",
   "start_url": "./",
   "scope": "./",
