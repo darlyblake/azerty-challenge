@@ -23,6 +23,8 @@
   const learnKeys = ["q","s","d","f","g","h","j","k","l","m","a","z","e","r","t","y","u","i","o","p","w","x","c","v","b","n"];
   let learnActive = false, learnTarget = "f", learnIndex = 0, learnScore = 0, learnSequence = [];
   const historyKey = "azerty-challenge-history-v1";
+  const playerKey = "azerty-challenge-player-v1";
+  let currentPlayer = "";
   const getHistory = () => { try { return JSON.parse(localStorage.getItem(historyKey) || "[]"); } catch (_) { return []; } };
   const saveHistory = (items) => { try { localStorage.setItem(historyKey, JSON.stringify(items.slice(0,100))); } catch (_) {} };
   const escapeHtml = (s) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
@@ -122,7 +124,7 @@
     const speed = Math.round(flashScore / elapsedMinutes);
     $("wpm").textContent = flashScore + "/10"; $("accuracy").innerHTML = (flashScore * 10) + '<small>%</small>';
     $("errors").textContent = 10 - flashScore; $("time-left").textContent = "Terminé"; $("time-progress").style.width = "0%";
-    const item = {date:new Date().toISOString(),type:"flash",level:$("difficulty").value,duration:Math.round((endAt-startedAt)/1000),wpm:speed,accuracy:flashScore*10,errors:10-flashScore,chars:flashScore};
+    const item = {date:new Date().toISOString(),type:"flash",level:$("difficulty").value,duration:Math.round((endAt-startedAt)/1000),wpm:speed,accuracy:flashScore*10,errors:10-flashScore,chars:flashScore,playerName:currentPlayer||"Joueur anonyme"};
     const h = getHistory(); h.unshift(item); saveHistory(h); $("session-count").textContent = h.length;
     $("result-message").textContent = "Tu as réussi " + flashScore + " mot(s) sur 10 (" + (flashScore*10) + " %). " + (10-flashScore) + " mot(s) manqué(s).";
     $("result-banner").hidden = false; $("start-button").textContent = "Rejouer les 10 mots →"; renderHistory();
@@ -132,7 +134,7 @@
     if(finished) return; finished = true; active = false; endAt = Date.now(); stopTimer();
     $("typing-input").disabled = true; $("exercise-status").textContent = "Terminé"; $("live-indicator")?.classList.remove("running");
     const s = stats(); const item = {date:new Date().toISOString(),type:$("exercise-type").value,level:$("difficulty").value,duration,wpm:s.wpm,accuracy:s.accuracy,errors:s.errors,chars:s.typed};
-    const h = getHistory(); h.unshift(item); saveHistory(h); $("result-message").textContent = s.wpm+" mots/min · "+s.accuracy+" % de précision · "+s.errors+" erreur(s). Continue pour progresser !"; $("result-banner").hidden = false; $("session-count").textContent = h.length; $("start-button").textContent = "Faire un nouvel exercice →"; renderText(target); renderHistory();
+    item.playerName=currentPlayer||"Joueur anonyme"; const h = getHistory(); h.unshift(item); saveHistory(h); $("result-message").textContent = s.wpm+" mots/min · "+s.accuracy+" % de précision · "+s.errors+" erreur(s). Continue pour progresser !"; $("result-banner").hidden = false; $("session-count").textContent = h.length; $("start-button").textContent = "Faire un nouvel exercice →"; renderText(target); renderHistory();
   }
   function onInput() {
     if(!active) return;
@@ -147,12 +149,29 @@
   }
   function reset() {stopTimer();flashMode=false;$("flash-status").hidden=true;$("text-display").classList.remove("flash-word");$("wpm-label").textContent="MOTS / MINUTE";active=false;finished=false;startedAt=0;endAt=0;target="";$("typing-input").value="";$("typing-input").disabled=true;$("typing-input").placeholder="La zone de saisie sera activée au démarrage…";$("text-display").innerHTML='<p class="placeholder-text">Ton exercice apparaîtra ici. Choisis tes réglages puis clique sur <b>Commencer l\'exercice</b>.</p>';$("exercise-status").textContent="En attente";$("live-indicator")?.classList.remove("running");$("start-button").textContent="Commencer l'exercice →";$("result-banner").hidden=true;$("wpm").textContent="—";$("accuracy").innerHTML='—<small>%</small>';$("errors").textContent="—";$("time-left").textContent=formatTime(Number($("duration").value));$("time-progress").style.width="100%";$("typed-progress").textContent="0 caractère saisi";document.querySelectorAll(".key.active").forEach(el=>el.classList.remove("active"));}
   function renderHistory() {
-    const h=getHistory(); $("session-count").textContent=h.length; $("history-total").textContent=h.length; $("history-best").textContent=h.length?Math.max(...h.map(x=>x.wpm||0)):0; $("history-accuracy").innerHTML=(h.length?Math.round(h.reduce((a,x)=>a+(x.accuracy||0),0)/h.length):0)+'<small>%</small>';
+    const h=getHistory();
+    const mine=h.filter(x=>(x.playerName||"Joueur précédent").toLocaleLowerCase()===currentPlayer.toLocaleLowerCase());
+    $("session-count").textContent=mine.length;
+    $("history-total").textContent=mine.length;
+    $("history-best").textContent=mine.length?Math.max(...mine.map(x=>x.wpm||0)):0;
+    $("history-accuracy").innerHTML=(mine.length?Math.round(mine.reduce((a,x)=>a+(x.accuracy||0),0)/mine.length):0)+'<small>%</small>';
     const levelNames={beginner:"Débutant",intermediate:"Intermédiaire",advanced:"Avancé"},typeNames={words:"Mots",text:"Texte",flash:"Mot flash"};
-    $("history-table").innerHTML=h.slice(0,30).map(x=>'<tr><td>'+new Date(x.date).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})+'</td><td>'+typeNames[x.type]+'</td><td>'+levelNames[x.level]+'</td><td><b>'+x.wpm+' m/min</b></td><td>'+x.accuracy+' %</td><td>'+x.errors+'</td></tr>').join("");
-    $("empty-history").hidden=h.length>0; $("history-table").parentElement.hidden=h.length===0;
+    $("history-heading").textContent=currentPlayer ? "Sessions de "+currentPlayer : "Dernières sessions";
+    $("history-table").innerHTML=mine.slice(0,30).map(x=>'<tr><td>'+new Date(x.date).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})+'</td><td>'+typeNames[x.type]+'</td><td>'+levelNames[x.level]+'</td><td><b>'+(x.type==="flash"?(x.chars||0)+"/10":(x.wpm||0)+" m/min")+'</b></td><td>'+(x.accuracy||0)+' %</td><td>'+(x.errors||0)+'</td></tr>').join("");
+    $("empty-history").hidden=mine.length>0; $("history-table").parentElement.hidden=mine.length===0;
+    const players={};
+    h.forEach(x=>{
+      const name=(x.playerName||"Joueur précédent").trim()||"Joueur précédent";
+      const key=name.toLocaleLowerCase();
+      if(!players[key])players[key]={name, sessions:0, best:0, accuracyTotal:0};
+      const p=players[key]; p.sessions++; p.best=Math.max(p.best, Number(x.wpm)||0); p.accuracyTotal+=Number(x.accuracy)||0;
+    });
+    const ranking=Object.values(players).sort((a,b)=>b.best-a.best || b.sessions-a.sessions || a.name.localeCompare(b.name,"fr"));
+    $("leaderboard-table").innerHTML=ranking.map((p,i)=>'<tr class="'+(p.name.toLocaleLowerCase()===currentPlayer.toLocaleLowerCase()?'current-player-row':'')+'"><td><span class="rank-badge">'+(i===0?'♛':i+1)+'</span></td><td><b>'+escapeHtml(p.name)+'</b>'+(p.name.toLocaleLowerCase()===currentPlayer.toLocaleLowerCase()?' <span class="you-badge">TOI</span>':'')+'</td><td><b>'+p.best+'</b> m/min</td><td>'+p.sessions+'</td><td>'+Math.round(p.accuracyTotal/p.sessions)+' %</td></tr>').join("");
+    $("empty-leaderboard").hidden=ranking.length>0; $("leaderboard-table").parentElement.hidden=ranking.length===0;
   }
   function switchView(view) {
+    $("landing-view").hidden=true; $("app-shell").hidden=false;
     const training=view==="training", history=view==="history", learn=view==="learn";
     $("training-view").hidden=!training; $("history-view").hidden=!history; $("learn-view").hidden=!learn;
     $("page-title").textContent=training?"Prêt à progresser ?":history?"Mes résultats":"Position des doigts";
@@ -196,6 +215,32 @@
     learnIndex++;
     showLearnTarget();
   }
+  function enterApp(name) {
+    currentPlayer=(name||"").trim().slice(0,30);
+    if(!currentPlayer){$("name-error").hidden=false;return;}
+    try{localStorage.setItem(playerKey,currentPlayer);}catch(_){}
+    $("current-player-label").textContent="Joueur : "+currentPlayer;
+    $("current-player-label").hidden=false;
+    $("landing-view").hidden=true; $("app-shell").hidden=false;
+    switchView("training"); reset();
+  }
+  $("landing-start").addEventListener("click",()=>{
+    $("name-entry").hidden=false; $("player-name").focus(); $("name-error").hidden=true;
+    $("landing-start").textContent="Continuer →";
+    $("landing-start").onclick=()=>{$("player-form").requestSubmit();};
+  });
+  $("player-form").addEventListener("submit",e=>{e.preventDefault();enterApp($("player-name").value);});
+  $("landing-history").addEventListener("click",()=>{
+    $("landing-view").hidden=true; $("app-shell").hidden=false;
+    if(!currentPlayer){$("current-player-label").hidden=true;}
+    switchView("history");
+  });
+  $("return-home").addEventListener("click",()=>{
+    stopTimer(); active=false; learnActive=false;
+    $("app-shell").hidden=true; $("landing-view").hidden=false;
+    $("name-entry").hidden=true; $("landing-start").textContent="Commencer →";
+    $("landing-start").onclick=null;
+  });
   $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);$("learn-start-button").addEventListener("click",startLearnPractice);window.addEventListener("keydown",handleLearnKey);
   $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });
   $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
@@ -206,5 +251,9 @@
   window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("install-button").hidden=false;});
   $("install-button").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("install-button").hidden=true;});
   if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
-  buildKeyboard();renderHistory();reset();
+  buildKeyboard();
+  try{currentPlayer=(localStorage.getItem(playerKey)||"").trim();}catch(_){currentPlayer="";}
+  if(currentPlayer){$("player-name").value=currentPlayer;$("current-player-label").textContent="Joueur : "+currentPlayer;$("current-player-label").hidden=false;}
+  $("landing-view").hidden=false;$("app-shell").hidden=true;
+  renderHistory();reset();
 })();
