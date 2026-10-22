@@ -9,3 +9,34 @@
 .flash-clock strong{color:#3568e8}
 .text-display.flash-word{min-height:125px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(28px,4vw,44px);font-weight:800;color:#172b4d;letter-spacing:.4px}
 @media(max-width:700px){.flash-status{padding:12px 10px;gap:8px}.flash-status strong{font-size:14px}.flash-caption{font-size:8px}.text-display.flash-word{min-height:100px}}
+
+
+/* Guide de placement des doigts */
+.learn-intro{padding:26px 0 18px}
+.learn-intro h2{font:800 22px Manrope,sans-serif;letter-spacing:-.5px;margin:7px 0}
+.learn-section-title{display:flex;align-items:flex-start;gap:13px;margin-bottom:21px}
+.learn-section-title h3{font:700 15px Manrope,sans-serif;margin:1px 0 5px}
+.learn-section-title p{font-size:12px;line-height:1.6;color:var(--muted);margin:0}
+.learn-number{flex:0 0 34px;height:34px;border-radius:9px;background:#edf3ff;color:#3568e8;display:grid;place-items:center;font:800 12px Manrope,sans-serif}
+.home-row-visual{display:flex;justify-content:center;gap:7px;margin:20px 0 15px}
+.finger-key{flex:1;max-width:70px;height:66px;border-radius:9px;display:grid;place-items:center;font:800 23px Manrope,sans-serif;border:1px solid transparent}
+.pinky-left,.pinky-right,.finger-chip.pinky,.legend-dot.pinky{background:#ffebee;color:#c33d56;border-color:#f8cbd2}
+.ring-left,.ring-right,.finger-chip.ring,.legend-dot.ring{background:#fff0e2;color:#b96822;border-color:#ffdfc1}
+.middle-left,.middle-right,.finger-chip.middle,.legend-dot.middle{background:#e9f7ed;color:#258653;border-color:#c9ebd4}
+.index-left,.index-right,.finger-chip.index,.legend-dot.index{background:#e8efff;color:#315fc8;border-color:#cfddff}
+.finger-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-size:10px;color:#66748b}
+.finger-legend span{display:flex;align-items:center;gap:6px}
+.legend-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.learn-tip{background:#f7f9fd;border-left:3px solid #8ba8f6;border-radius:0 7px 7px 0;padding:13px 15px;color:#65728a;font-size:12px;line-height:1.7;margin:20px 0 0}
+.learn-tip strong{color:#263b61}
+.finger-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.finger-card{border:1px solid #e8edf5;border-radius:9px;padding:15px;display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+.finger-chip{font-size:10px;font-weight:700;border:1px solid transparent;border-radius:20px;padding:6px 9px}
+.finger-card strong{font:800 15px Manrope,sans-serif;color:#233552;letter-spacing:.2px}
+.finger-card p{font-size:11px;line-height:1.6;color:#77849a;margin:0}
+.practice-box{background:#f7f9ff;border:1px solid #e6edff;border-radius:12px;padding:24px;text-align:center}
+.learn-target{display:block;font:800 clamp(42px,6vw,68px) Manrope,sans-serif;color:#285bd0;margin:10px 0}
+.practice-box>p{font-size:12px;color:#6d7b93;line-height:1.6;min-height:20px}
+.learn-practice-meta{display:flex;justify-content:space-between;max-width:340px;margin:17px auto;color:#7d889d;font-size:11px}
+.learn-feedback.good{color:#16885c}.learn-feedback.retry{color:#c33d56}
+@media(max-width:700px){.home-row-visual{gap:4px}.finger-key{height:47px;font-size:16px;border-radius:6px}.finger-legend{gap:9px}.finger-grid{grid-template-columns:1fr}.learn-intro h2{font-size:19px}.practice-box{padding:18px 12px}}
