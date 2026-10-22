@@ -4,57 +4,71 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172b4d">
-  <meta name="description" content="AZERTY Challenge — entraîne-toi à taper plus vite et avec précision.">
-  <title>AZERTY Challenge — Entraînement clavier</title>
+  <meta name="description" content="AZERTY Challenge : apprends le clavier, Windows, le matériel informatique, la bureautique et les bons réflexes numériques.">
+  <title>AZERTY Challenge — Apprendre l’informatique</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261022-7">
+  <link rel="stylesheet" href="styles.css?v=20261022-8">
 </head>
 <body>
 
   <section id="landing-view" class="landing-view">
     <header class="landing-nav">
       <a class="brand landing-brand" href="#accueil" aria-label="AZERTY Challenge accueil"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">AZERTY <b>CHALLENGE</b></span></a>
-      <span class="landing-tag"><span class="dot"></span> Entraînement clavier AZERTY</span>
+      <span class="landing-tag"><span class="dot"></span> Plateforme d’apprentissage informatique</span>
     </header>
     <main class="landing-main">
       <div class="landing-copy">
-        <span class="landing-kicker"><span>⌨</span> APPRENDS · PRATIQUE · PROGRESSE</span>
-        <h1>Chaque touche te rapproche de la <em>maîtrise.</em></h1>
-        <p>Apprends à placer tes doigts, améliore ta vitesse de frappe et mesure tes progrès. Un exercice après l’autre, à ton rythme.</p>
+        <span class="landing-kicker"><span>✦</span> DÉCOUVRE · APPRENDS · PROGRESSE</span>
+        <h1>L’informatique s’apprend en <em>pratiquant.</em></h1>
+        <p>Clavier, Windows, matériel, souris, bureautique et sécurité numérique : choisis ton parcours et développe tes compétences pas à pas.</p>
         <div class="landing-actions">
           <button type="button" id="landing-start" class="primary-button landing-primary" aria-expanded="false" aria-controls="name-entry">Commencer <span>→</span></button>
           <button type="button" id="landing-history" class="secondary-button landing-secondary">Historique & classement <span>↗</span></button>
         </div>
         <div id="name-entry" class="name-entry" hidden>
-          <label for="player-name">Comment tu t'appelles ?</label>
-          <p>Ton nom apparaîtra dans ton historique et le classement de cet appareil.</p>
+          <label for="player-name">D’abord, comment tu t’appelles ?</label>
+          <p>Ton nom permettra d’identifier tes résultats sur cet appareil.</p>
           <form id="player-form" class="player-form">
             <input id="player-name" name="player-name" type="text" maxlength="30" placeholder="Ex. : Darly" autocomplete="given-name" required>
             <button type="submit" class="primary-button">Entrer <span>→</span></button>
           </form>
           <p id="name-error" class="name-error" hidden>Entre un nom pour continuer.</p>
         </div>
+        <div id="path-selection" class="path-selection" hidden>
+          <div class="path-selection-heading"><span class="step-label">CHOISIS TON PARCOURS</span><h2>Que veux-tu apprendre aujourd’hui ?</h2><p>Choisis un domaine pour lancer directement ses exercices.</p></div>
+          <div class="path-grid">
+            <button type="button" class="path-card" data-launch="keyboard"><span class="path-icon">⌨</span><strong>Clavier AZERTY</strong><small>Vitesse, précision, lettres et symboles</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="windows"><span class="path-icon">▦</span><strong>Windows</strong><small>Bureau, fenêtres, fichiers et raccourcis</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="hardware"><span class="path-icon">▤</span><strong>Matériel informatique</strong><small>Composants, périphériques et rôles</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="mouse"><span class="path-icon">⌖</span><strong>Souris</strong><small>Clic, double-clic, défilement et gestes</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="office"><span class="path-icon">▧</span><strong>Bureautique</strong><small>Word, Excel, PowerPoint et commandes</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="ports"><span class="path-icon">⌁</span><strong>Câbles et ports</strong><small>USB, HDMI, Ethernet et branchements</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="security"><span class="path-icon">◇</span><strong>Sécurité numérique</strong><small>Mots de passe, mises à jour et arnaques</small><span class="path-arrow">→</span></button>
+            <button type="button" class="path-card" data-launch="troubleshoot"><span class="path-icon">⚙</span><strong>Dépannage</strong><small>Comprendre les pannes courantes</small><span class="path-arrow">→</span></button>
+          </div>
+          <button type="button" id="change-name" class="change-name">← Modifier mon nom</button>
+        </div>
         <div class="landing-trust"><span>✓ Gratuit</span><span>✓ Sans compte</span><span>✓ Fonctionne hors connexion</span></div>
       </div>
-      <div class="landing-art" aria-label="Illustration d'un clavier et d'un objectif de progression">
+      <div class="landing-art learning-art" aria-label="Illustration de plusieurs domaines de l’informatique">
         <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
         <div class="art-card art-card-main">
-          <div class="art-card-top"><span class="art-live"></span><span>SESSION DE FRAPPE</span><span class="art-dots">•••</span></div>
-          <div class="art-big-number">AZ<span>ERTY</span></div>
-          <div class="art-mini-text">La précision avant la vitesse.</div>
+          <div class="art-card-top"><span class="art-live"></span><span>ESPACE D’APPRENTISSAGE</span><span class="art-dots">•••</span></div>
+          <div class="art-big-number">IT<span>+</span></div>
+          <div class="art-mini-text">Des compétences utiles, en pratique.</div>
           <div class="art-keys"><span>A</span><span>Z</span><span>E</span><span>R</span><span>T</span><span>Y</span><span>U</span><span>I</span><span>O</span><span>P</span><span>Q</span><span>S</span><span>D</span><span class="art-key-highlight">F</span><span>G</span><span>H</span><span class="art-key-highlight">J</span><span>K</span><span>L</span><span>M</span></div>
           <div class="art-progress"><span></span></div>
-          <div class="art-card-bottom"><span>ENTRAÎNEMENT</span><strong>À toi de jouer&nbsp; →</strong></div>
+          <div class="art-card-bottom"><span>TON PARCOURS</span><strong>Apprendre en pratiquant&nbsp; →</strong></div>
         </div>
-        <div class="art-float art-float-score"><span class="float-icon">↗</span><div><strong>À ton rythme</strong><small>Progresse chaque jour</small></div></div>
-        <div class="art-float art-float-rank"><span class="float-trophy">♛</span><div><strong>Ton classement</strong><small>Compare tes scores</small></div></div>
+        <div class="art-float art-float-score"><span class="float-icon">▦</span><div><strong>Plusieurs parcours</strong><small>Clavier, Windows, matériel…</small></div></div>
+        <div class="art-float art-float-rank"><span class="float-trophy">✓</span><div><strong>À ton niveau</strong><small>Avance étape par étape</small></div></div>
       </div>
     </main>
     <section class="landing-features">
-      <div><span class="feature-icon">⌨</span><strong>Entraîne-toi</strong><p>Mots, textes et défis chronométrés.</p></div>
-      <div><span class="feature-icon">☝</span><strong>Apprends les bons gestes</strong><p>Découvre la position de chaque doigt.</p></div>
-      <div><span class="feature-icon">♜</span><strong>Suis tes résultats</strong><p>Consulte ton historique et le classement.</p></div>
+      <div><span class="feature-icon">⌨</span><strong>Clavier AZERTY</strong><p>Travaille la frappe, la précision et les symboles.</p></div>
+      <div><span class="feature-icon">▦</span><strong>Windows et matériel</strong><p>Comprends les fichiers, les composants et les périphériques.</p></div>
+      <div><span class="feature-icon">▧</span><strong>Outils numériques</strong><p>Découvre la bureautique, les branchements et la sécurité.</p></div>
     </section>
     <footer class="landing-footer"><span>AZERTY CHALLENGE · Apprendre en pratiquant.</span><span>Les scores sont enregistrés sur cet appareil.</span></footer>
   </section>
@@ -174,7 +188,7 @@
       <footer class="footer"><span>AZERTY CHALLENGE <span class="footer-separator">·</span> Apprendre en pratiquant.</span><span>Sans compte · Données stockées sur cet appareil</span></footer>
     </main>
   </div>
-  <script src="app.js?v=20261022-7" defer></script>
-  <script src="modules.js?v=20261022-1" defer></script>
+  <script src="app.js?v=20261022-8" defer></script>
+  <script src="modules.js?v=20261022-2" defer></script>
 </body>
 </html>
