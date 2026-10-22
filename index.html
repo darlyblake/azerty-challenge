@@ -8,7 +8,7 @@
   <title>AZERTY Challenge — Apprendre l’informatique</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=20261022-9">
+  <link rel="stylesheet" href="styles.css?v=20261022-10">
 </head>
 <body>
 
@@ -26,17 +26,24 @@
           <button type="button" id="landing-start" class="primary-button landing-primary" aria-expanded="false" aria-controls="name-entry">Commencer <span>→</span></button>
           <button type="button" id="landing-history" class="secondary-button landing-secondary">Historique & classement <span>↗</span></button>
         </div>
-        <div id="name-entry" class="name-entry" hidden>
-          <label for="player-name">D’abord, comment tu t’appelles ?</label>
-          <p>Ton nom permettra d’identifier tes résultats sur cet appareil.</p>
-          <form id="player-form" class="player-form">
-            <input id="player-name" name="player-name" type="text" maxlength="30" placeholder="Ex. : Darly" autocomplete="given-name" required>
-            <button type="button" id="player-continue" class="primary-button">Continuer vers les parcours <span>→</span></button>
-          </form>
-          <p id="name-error" class="name-error" hidden>Entre un nom pour continuer.</p>
+        <div id="name-entry" class="name-entry modal-overlay" hidden>
+          <section class="dialog-panel name-dialog" role="dialog" aria-modal="true" aria-labelledby="name-dialog-title">
+            <button type="button" class="dialog-close" id="name-close" aria-label="Fermer">×</button>
+            <span class="dialog-eyebrow">TON PROFIL</span>
+            <h2 id="name-dialog-title">Comment tu t’appelles ?</h2>
+            <p class="dialog-description">Ton nom apparaîtra dans ton historique et le classement de cet appareil.</p>
+            <form id="player-form" class="player-form">
+              <label for="player-name">Ton prénom ou ton nom</label>
+              <input id="player-name" name="player-name" type="text" maxlength="30" placeholder="Ex. : Darly" autocomplete="given-name" required>
+              <button type="button" id="player-continue" class="primary-button">Continuer <span>→</span></button>
+            </form>
+            <p id="name-error" class="name-error" hidden>Entre un nom pour continuer.</p>
+          </section>
         </div>
-        <div id="path-selection" class="path-selection" hidden>
-          <div class="path-selection-heading"><span class="step-label">CHOISIS TON PARCOURS</span><h2>Que veux-tu apprendre aujourd’hui ?</h2><p>Choisis un domaine pour lancer directement ses exercices.</p></div>
+        <div id="path-selection" class="path-selection modal-overlay" hidden>
+          <section class="dialog-panel path-dialog" role="dialog" aria-modal="true" aria-labelledby="path-dialog-title">
+            <button type="button" class="dialog-close" id="path-close" aria-label="Fermer">×</button>
+            <div class="path-selection-heading"><span class="step-label">ÉTAPE 2 · CHOIX DU PARCOURS</span><h2 id="path-dialog-title">Que veux-tu apprendre aujourd’hui ?</h2><p>Choisis un domaine pour lancer directement ses exercices.</p></div>
           <div class="path-grid">
             <button type="button" class="path-card" data-launch="keyboard"><span class="path-icon">⌨</span><strong>Clavier AZERTY</strong><small>Vitesse, précision, lettres et symboles</small><span class="path-arrow">→</span></button>
             <button type="button" class="path-card" data-launch="windows"><span class="path-icon">▦</span><strong>Windows</strong><small>Bureau, fenêtres, fichiers et raccourcis</small><span class="path-arrow">→</span></button>
@@ -47,7 +54,8 @@
             <button type="button" class="path-card" data-launch="security"><span class="path-icon">◇</span><strong>Sécurité numérique</strong><small>Mots de passe, mises à jour et arnaques</small><span class="path-arrow">→</span></button>
             <button type="button" class="path-card" data-launch="troubleshoot"><span class="path-icon">⚙</span><strong>Dépannage</strong><small>Comprendre les pannes courantes</small><span class="path-arrow">→</span></button>
           </div>
-          <button type="button" id="change-name" class="change-name">← Modifier mon nom</button>
+            <button type="button" id="change-name" class="change-name">← Modifier mon nom</button>
+          </section>
         </div>
         <div class="landing-trust"><span>✓ Gratuit</span><span>✓ Sans compte</span><span>✓ Fonctionne hors connexion</span></div>
       </div>
@@ -188,7 +196,7 @@
       <footer class="footer"><span>AZERTY CHALLENGE <span class="footer-separator">·</span> Apprendre en pratiquant.</span><span>Sans compte · Données stockées sur cet appareil</span></footer>
     </main>
   </div>
-  <script src="app.js?v=20261022-9" defer></script>
+  <script src="app.js?v=20261022-10" defer></script>
   <script src="modules.js?v=20261022-3" defer></script>
 </body>
 </html>
