@@ -109,3 +109,59 @@ tbody tr:first-child .rank-badge{background:#fff0d7;color:#aa711c}
 .you-badge{display:inline-block;background:#e1eaff;color:#315fc8;border-radius:4px;padding:3px 5px;font-size:8px;font-weight:800;letter-spacing:.5px}
 @media(max-width:900px){.landing-view{padding:0 28px}.landing-main{grid-template-columns:1fr 0.85fr;gap:20px}.landing-copy h1{font-size:clamp(34px,5vw,48px)}.art-float-score{right:-5px}.art-float-rank{left:-5px}.art-orbit{width:340px;height:340px}.orbit-two{width:270px;height:270px}.art-card-main{padding:18px}}
 @media(max-width:700px){.landing-view{padding:0 18px}.landing-nav{height:70px}.landing-tag{font-size:0}.landing-tag .dot{font-size:initial}.landing-main{display:flex;flex-direction:column;align-items:stretch;padding:38px 0 22px;gap:8px}.landing-copy h1{font-size:39px;letter-spacing:-1.8px;margin:19px 0 14px}.landing-copy>p{font-size:13px}.landing-actions{flex-direction:column;margin-top:22px}.landing-actions button{width:100%}.landing-trust{gap:10px;margin-top:20px}.landing-art{min-height:320px;margin:0 -5px}.art-card-main{width:min(88%,360px)}.art-float-score{top:15px;right:0}.art-float-rank{bottom:20px;left:0}.art-orbit{width:300px;height:300px}.orbit-two{width:230px;height:230px}.landing-features{grid-template-columns:1fr;gap:17px;padding:20px 0}.landing-footer{flex-direction:column;gap:6px}.player-form{flex-direction:column}.player-form button{width:100%}.topbar-right{gap:5px;flex-wrap:wrap;justify-content:flex-end}.player-label{display:none}.return-home{font-size:9px;padding:8px}.leaderboard-panel>.panel-heading{padding:0 14px 15px}}
+
+
+/* Accueil — finition responsive et interactions visibles */
+.landing-view{position:relative;isolation:isolate}
+.landing-nav{max-width:1440px;margin:0 auto}
+.landing-main{min-height:clamp(480px,65vh,650px);padding-top:clamp(30px,5vh,58px);padding-bottom:clamp(28px,4vh,48px)}
+.landing-copy h1{max-width:600px}
+.landing-copy>p{max-width:470px}
+.landing-actions button{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.landing-actions button:focus-visible,.player-form button:focus-visible,.return-home:focus-visible{outline:3px solid #9bb7ff;outline-offset:3px}
+.landing-primary{background:#285bd0;box-shadow:0 8px 18px #285bd02b}
+.landing-primary:hover{background:#1e4ebc;transform:translateY(-1px);box-shadow:0 11px 24px #285bd033}
+.landing-secondary:hover{border-color:#b9c9e7;color:#244b9d;transform:translateY(-1px)}
+.name-entry{scroll-margin:22px;animation:entry-in .22s ease-out}
+.name-entry[hidden]{display:none!important}
+.player-form input{min-height:45px}
+.player-form button{min-height:45px}
+.landing-features>div{padding:7px 0}
+.landing-footer{line-height:1.6}
+@keyframes entry-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1200px){.landing-view{padding-left:max(5vw,40px);padding-right:max(5vw,40px)}}
+@media(max-width:900px){
+  .landing-main{min-height:0;padding-top:46px;padding-bottom:30px}
+  .landing-art{min-width:0}
+  .art-card-main{max-width:350px}
+  .art-float-score{right:0}
+  .art-float-rank{left:0}
+}
+@media(max-width:700px){
+  .landing-view{padding:0 20px}
+  .landing-nav{height:68px;gap:10px}
+  .landing-brand .brand-mark{width:34px;height:34px}
+  .landing-brand .brand-name{font-size:11px}
+  .landing-copy h1{font-size:clamp(34px,9vw,43px);line-height:1.08;letter-spacing:-1.5px}
+  .landing-kicker{font-size:9px;letter-spacing:1px;padding:8px 10px}
+  .landing-actions{gap:10px}
+  .landing-actions button{min-height:50px}
+  .landing-art{min-height:285px;margin-top:6px}
+  .art-card-main{width:min(86%,330px);padding:17px;transform:rotate(-1deg)}
+  .art-float{padding:9px 10px;gap:7px}
+  .art-float-score{top:10px;right:-1px}
+  .art-float-rank{bottom:10px;left:-1px}
+  .landing-features{gap:14px}
+  .landing-features>div{grid-template-columns:34px 1fr;column-gap:10px}
+  .feature-icon{width:32px;height:32px}
+  .landing-footer{padding-bottom:20px}
+}
+@media(max-width:380px){
+  .landing-view{padding:0 14px}
+  .landing-tag{display:none}
+  .landing-copy h1{font-size:33px}
+  .art-float strong{font-size:9px}
+  .art-float small{font-size:8px}
+  .art-card-main{width:84%;padding:14px}
+  .art-keys{gap:4px}
+}
