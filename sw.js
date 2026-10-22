@@ -1,4 +1,4 @@
-const CACHE_NAME = "azerty-challenge-v10";
+const CACHE_NAME = "azerty-challenge-v11";
 const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./assets/icon.svg", "./modules.js"];
 
 self.addEventListener("install", event => {
