@@ -138,6 +138,16 @@
   }
   function onInput() {
     if(!active) return;
+    if(flashMode) {
+      let flashTyped=$("typing-input").value;
+      if(flashTyped.length>target.length) { flashTyped=flashTyped.slice(0,target.length); $("typing-input").value=flashTyped; }
+      if(flashTyped.toLocaleLowerCase()===target.toLocaleLowerCase()) {
+        flashScore++; stopTimer(); flashIndex++;
+        $("learn-feedback")?.classList.remove("good","retry");
+        if(flashIndex>=flashWords.length) finishFlash(); else showFlashWord();
+      }
+      return;
+    }
     if(!startedAt){startedAt=Date.now();timerId=setInterval(()=>{stats();if(Date.now()-startedAt>=duration*1000)finish();},200);}
     const typed = $("typing-input").value;
     if(typed.length>target.length) $("typing-input").value = typed.slice(0,target.length);
