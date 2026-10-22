@@ -356,9 +356,14 @@
     e.preventDefault();
     showPathSelection();
   });
-  document.querySelectorAll("[data-launch]").forEach(button=>button.addEventListener("click",()=>{
+  document.querySelectorAll("[data-launch]").forEach(button=>button.addEventListener("click",e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    const destination=button.dataset.launch;
+    // Fermer la fenêtre immédiatement, avant d'ouvrir le parcours choisi.
+    $("path-selection").hidden=true;
     document.body.style.overflow="";
-    enterApp(currentPlayer,button.dataset.launch);
+    enterApp(currentPlayer,destination);
   }));
   $("change-name").addEventListener("click",()=>{
     $("path-selection").hidden=true;
