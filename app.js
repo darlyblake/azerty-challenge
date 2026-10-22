@@ -18,7 +18,8 @@
     [{label:"⇧",sub:"Maj",wide:true},{label:"<",sub:">"},{label:"w",sub:"W"},{label:"x",sub:"X"},{label:"c",sub:"C"},{label:"v",sub:"V"},{label:"b",sub:"B"},{label:"n",sub:"N"},{label:",",sub:"?"},{label:";",sub:"."},{label:":",sub:"/"},{label:"!",sub:"§"},{label:"⇧",sub:"Maj",wide:true}],
     [{label:"Ctrl",sub:"",wide:true},{label:"Fn",sub:"",wide:true},{label:"⊞",sub:"",wide:true},{label:"Alt",sub:"",wide:true},{label:"Espace",sub:"",space:true},{label:"Alt Gr",sub:"",wide:true},{label:"Ctrl",sub:"",wide:true}]
   ];
-  let target = "", startedAt = 0, endAt = 0, timerId = null, active = false, finished = false, duration = 30, errors = 0, lastLength = 0;\n  let flashWords = [], flashIndex = 0, flashScore = 0, flashDeadline = 0, flashDuration = 5, flashMode = false;
+  let target = "", startedAt = 0, endAt = 0, timerId = null, active = false, finished = false, duration = 30, errors = 0, lastLength = 0;
+  let flashWords = [], flashIndex = 0, flashScore = 0, flashDeadline = 0, flashDuration = 5, flashMode = false;
   const historyKey = "azerty-challenge-history-v1";
   const getHistory = () => { try { return JSON.parse(localStorage.getItem(historyKey) || "[]"); } catch (_) { return []; } };
   const saveHistory = (items) => { try { localStorage.setItem(historyKey, JSON.stringify(items.slice(0,100))); } catch (_) {} };
@@ -153,7 +154,8 @@
     const training=view==="training";$("training-view").hidden=!training;$("history-view").hidden=training;$("page-title").textContent=training?"Prêt à progresser ?":"Mes résultats";document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===view));if(!training)renderHistory();
   }
   $("start-button").addEventListener("click",start);$("retry-button").addEventListener("click",start);$("reset-button").addEventListener("click",reset);$("typing-input").addEventListener("input",onInput);
-  $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });\n  $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
+  $("exercise-type").addEventListener("change",()=>{ if (!active) { reset(); $("typing-title").textContent = $("exercise-type").value === "flash" ? "Un mot à la fois, 10 mots au total" : "Ton espace de frappe"; } });
+  $("duration").addEventListener("change",()=>{if(!active&&!startedAt){$("time-left").textContent=formatTime(Number($("duration").value));duration=Number($("duration").value);}});
   document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
   $("clear-history").addEventListener("click",()=>{if(confirm("Effacer tous les résultats enregistrés sur cet ordinateur ?")){saveHistory([]);renderHistory();}});
   window.addEventListener("keydown",e=>{if(active&&document.activeElement!==$("typing-input")&&e.key.length===1){$("typing-input").focus();}});
