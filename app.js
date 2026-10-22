@@ -35,30 +35,35 @@
     const level = $("difficulty").value, type = $("exercise-type").value;
     if (type === "keyboard") {
       // AZERTY FR : lettres, chiffres, ponctuation et symboles accessibles sur les touches.
+      // Parcours complet : toutes les lettres, les chiffres et les signes du clavier AZERTY.
+      // Les groupes sont mélangés, mais aucun caractère n'est oublié.
       const groups = [
         "azertyuiop",
         "qsdfghjklm",
         "wxcvbn",
         "0123456789",
-        "&é\"'(-è_çà)=+",
+        "²&é\"'(-è_çà)=+",
         "^$ù*;:!,?./<>%\\\\",
-        "²£°§€@#{}[]|~"
+        "£°§€@#{}[]|~"
       ];
-      const shuffled = groups.map(group => group.split("").sort(() => Math.random() - .5).join(""));
-      return shuffled.join("   ");
+      return groups.map(group => group.split("").sort(() => Math.random() - 0.5).join("")).join("   ");
     }
     if (type === "text") {
       const text = texts[level][Math.floor(Math.random()*texts[level].length)];
       return text + "  1234567890 ² & é \" ' ( - è _ ç à ) = + ^ $ ù * ; : ! , ? . / < > % £ ° § @ #";
     }
     const pool = words[level].join(" ").split(/\s+/);
-    const count = level === "beginner" ? 90 : level === "intermediate" ? 75 : 65;
+    const count = level === "beginner" ? 55 : level === "intermediate" ? 45 : 35;
     const out = [];
     for(let i=0;i<count;i++) out.push(pool[Math.floor(Math.random()*pool.length)]);
-    // Des séquences de chiffres et de signes sont ajoutées à tous les exercices de mots.
-    // Chaque série de mots fait aussi pratiquer les chiffres et les symboles du clavier AZERTY.
-    const symbolsAndNumbers = ["1234567890", "² & é \" ' ( - è _ ç à ) = +", "^ $ ù * ; : ! , ? . / < > %", "£ ° § @ #"];
-    return out.join(" ") + " " + symbolsAndNumbers.join(" ");
+    // Les exercices de mots font aussi travailler les chiffres et symboles, pas seulement les lettres.
+    const symbolsAndNumbers = [
+      "1234567890",
+      "² & é \" ' ( - è _ ç à ) = +",
+      "^ $ ù * ; : ! , ? . / < > %",
+      "£ ° § € @ # { } [ ] | ~"
+    ];
+    return out.join(" ") + "  " + symbolsAndNumbers.join("   ");
   }
   function renderText(value) {
     const typed = $("typing-input").value;
