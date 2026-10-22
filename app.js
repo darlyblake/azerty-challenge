@@ -33,11 +33,32 @@
   }
   function makeTarget() {
     const level = $("difficulty").value, type = $("exercise-type").value;
-    if (type === "text") return texts[level][Math.floor(Math.random()*texts[level].length)];
+    if (type === "keyboard") {
+      // AZERTY FR : lettres, chiffres, ponctuation et symboles accessibles sur les touches.
+      const groups = [
+        "azertyuiop",
+        "qsdfghjklm",
+        "wxcvbn",
+        "0123456789",
+        "&é\"'(-è_çà)=+",
+        "^$ù*;:!,?./<>%",
+        "²£°§"
+      ];
+      const shuffled = groups.map(group => group.split("").sort(() => Math.random() - .5).join(""));
+      return shuffled.join("   ");
+    }
+    if (type === "text") {
+      const text = texts[level][Math.floor(Math.random()*texts[level].length)];
+      if(level === "beginner") return text;
+      return text + "  123 456 7890 ! ? ; : , . % + = ( ) & é @ #";
+    }
     const pool = words[level].join(" ").split(/\s+/);
     const count = level === "beginner" ? 90 : level === "intermediate" ? 75 : 65;
     const out = [];
     for(let i=0;i<count;i++) out.push(pool[Math.floor(Math.random()*pool.length)]);
+    // Des séquences de chiffres et de signes sont ajoutées à tous les exercices de mots.
+    const extras = ["123","456","7890","2026","!","?",":",";",",",".","%","+","=","(",")","&","é","à","ç","ù","£","°","§","/","*"];
+    for(let i=0;i<Math.ceil(count/12);i++) out.splice(Math.min(out.length,i*12+6),0,extras[Math.floor(Math.random()*extras.length)]);
     return out.join(" ");
   }
   function renderText(value) {
@@ -194,7 +215,7 @@
     $("history-total").textContent=mine.length;
     $("history-best").textContent=mine.length?Math.max(...mine.map(x=>x.wpm||0)):0;
     $("history-accuracy").innerHTML=(mine.length?Math.round(mine.reduce((a,x)=>a+(x.accuracy||0),0)/mine.length):0)+'<small>%</small>';
-    const levelNames={beginner:"Débutant",intermediate:"Intermédiaire",advanced:"Avancé"},typeNames={words:"Mots",text:"Texte",flash:"Mot flash"};
+    const levelNames={beginner:"Débutant",intermediate:"Intermédiaire",advanced:"Avancé"},typeNames={words:"Mots",text:"Texte",flash:"Mot flash",keyboard:"Clavier complet"};
     $("history-heading").textContent=currentPlayer ? "Sessions de "+currentPlayer : "Dernières sessions";
     $("history-table").innerHTML=mine.slice(0,30).map(x=>'<tr><td>'+new Date(x.date).toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})+'</td><td>'+typeNames[x.type]+'</td><td>'+levelNames[x.level]+'</td><td><b>'+(x.type==="flash"?(x.chars||0)+"/10":(x.wpm||0)+" m/min")+'</b></td><td>'+(x.accuracy||0)+' %</td><td>'+(x.errors||0)+'</td></tr>').join("");
     $("empty-history").hidden=mine.length>0; $("history-table").parentElement.hidden=mine.length===0;
