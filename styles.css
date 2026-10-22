@@ -276,3 +276,56 @@ tbody tr:first-child .rank-badge{background:#fff0d7;color:#aa711c}
 @keyframes result-confetti-fall{0%{transform:translateY(-10px) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(390px) rotate(300deg);opacity:0}}
 @media(max-width:620px){.result-modal{padding:12px}.result-dialog{border-radius:18px;max-height:94vh}.result-modal-content{display:block;padding:27px 17px 18px}.result-character{min-height:90px;height:90px;font-size:76px;margin:0 auto 8px}.result-copy h2{text-align:center;font-size:29px;margin:7px 0}.result-kicker{display:block;text-align:center;font-size:9px}.result-copy>p{text-align:center;font-size:12px;margin-bottom:15px}.result-score-box{grid-template-columns:100px minmax(0,1fr);gap:10px;padding:12px}.result-score-ring{width:96px;border-width:7px}.result-score-ring strong{font-size:24px}.result-score-details{padding-left:10px;gap:11px}.result-score-details p strong{font-size:17px}.result-score-details p span{font-size:9px}.result-encouragement{text-align:left!important;margin:12px 0!important;padding:11px 12px}.result-modal-actions{flex-direction:column}.result-modal-actions button{flex:none;width:100%}.result-close{right:9px;top:9px}}
 @media(prefers-reduced-motion:reduce){.result-dialog,.result-backdrop,.result-character,.result-confetti span{animation:none!important}}
+
+
+/* Mode de jeu immersif : le jeu devient l'écran, pas une carte dans le tableau de bord */
+body.immersive-play{overflow:hidden;background:#071329}
+body.immersive-play .app-shell{display:block!important;width:100%;height:100dvh;min-height:100dvh;overflow:auto;background:radial-gradient(ellipse at 50% -20%,#1c3765 0,#0b1b35 52%,#071329 100%);color:#f4f7ff}
+body.immersive-play .sidebar,body.immersive-play .topbar,body.immersive-play .practice-welcome,body.immersive-play .setup-panel{display:none!important}
+body.immersive-play .main-content{margin:0!important;width:100%;max-width:none;min-height:100dvh;padding:clamp(14px,3vw,34px) clamp(12px,4vw,56px) 28px;overflow:visible}
+body.immersive-play #training-view{width:100%;max-width:1450px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(14px,2.2vh,24px);align-content:start}
+body.immersive-play .metrics-grid{order:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0;background:#ffffff0c;border:1px solid #ffffff20;border-radius:16px;overflow:hidden}
+body.immersive-play .metric-card{padding:13px 17px;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;min-width:0}
+body.immersive-play .metric-card+.metric-card{border-left:1px solid #ffffff20!important}
+body.immersive-play .metric-top>span:first-child,body.immersive-play .metric-note{color:#a9bad8}
+body.immersive-play .metric-value{color:#fff;font-size:clamp(22px,3vw,34px)}
+body.immersive-play .metric-icon{background:#ffffff14}
+body.immersive-play .typing-panel{order:1;min-height:clamp(280px,45vh,480px);padding:clamp(18px,3vw,34px);display:flex;flex-direction:column;justify-content:center;gap:20px;background:#ffffff08!important;border:1px solid #ffffff22!important;border-radius:22px!important;box-shadow:0 22px 70px #0002!important}
+body.immersive-play .typing-heading{border-bottom:1px solid #ffffff20;padding-bottom:15px}
+body.immersive-play .typing-heading h3,body.immersive-play .keyboard-heading h3{color:#fff}
+body.immersive-play .step-label,body.immersive-play .muted{color:#a9bad8}
+body.immersive-play .live-indicator{color:#a9f0c6;background:#174b3a;border-color:#286c51}
+body.immersive-play .text-display{background:#08162d;border:1px solid #ffffff1d;border-radius:15px;color:#e8efff;font-size:clamp(20px,3vw,31px);line-height:1.9;padding:clamp(18px,3vw,32px);min-height:110px;max-height:32vh;overflow:auto}
+body.immersive-play .text-display .char.current{background:#4779ef;color:white;border-radius:4px;box-shadow:0 0 0 3px #4779ef55}
+body.immersive-play .text-display .char.correct{color:#77e6a9}
+body.immersive-play .text-display .char.incorrect{background:#9d3345;color:#fff;border-radius:3px}
+body.immersive-play .typing-input{background:#0a1830;color:#fff;border-color:#52688b;border-radius:12px;min-height:76px;font-size:17px}
+body.immersive-play .typing-input:focus{border-color:#77a4ff;box-shadow:0 0 0 3px #4779ef35}
+body.immersive-play .typing-footer{color:#a9bad8}
+body.immersive-play .keyboard-panel{order:2;padding:clamp(12px,2vw,22px);background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+body.immersive-play .keyboard-heading{margin-bottom:12px}
+body.immersive-play .keyboard-layout-label{color:#9fb4d8;border-color:#ffffff30}
+body.immersive-play .virtual-keyboard{max-width:1100px;margin:0 auto}
+body.immersive-play .key{background:linear-gradient(180deg,#233a60,#152846);border-color:#3b5278;color:#f0f5ff;box-shadow:0 3px 0 #081328}
+body.immersive-play .key .sub{color:#9fb4d8}
+body.immersive-play .key.active{background:#3974ed;color:#fff;border-color:#82aaff;box-shadow:0 0 18px #3974ed66}
+body.immersive-play .result-modal{z-index:2000}
+@media(max-width:650px){
+ body.immersive-play .main-content{padding:12px 10px 18px}
+ body.immersive-play #training-view{gap:12px}
+ body.immersive-play .metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr));border-radius:12px}
+ body.immersive-play .metric-card{padding:9px 11px}
+ body.immersive-play .metric-card:nth-child(3){border-left:0!important;border-top:1px solid #ffffff20!important}
+ body.immersive-play .metric-card:nth-child(4){border-top:1px solid #ffffff20!important}
+ body.immersive-play .metric-note{font-size:10px}
+ body.immersive-play .typing-panel{min-height:0;padding:14px 12px;gap:13px;border-radius:16px!important}
+ body.immersive-play .typing-heading{padding-bottom:10px}
+ body.immersive-play .typing-heading h3{font-size:18px}
+ body.immersive-play .text-display{font-size:19px;line-height:1.75;padding:14px 11px;max-height:27vh;min-height:88px}
+ body.immersive-play .typing-input{min-height:66px;padding:12px;font-size:16px}
+ body.immersive-play .keyboard-panel{padding:5px 0}
+ body.immersive-play .keyboard-heading h3{font-size:15px}
+ body.immersive-play .keyboard-heading p{font-size:11px}
+ body.immersive-play .key{min-height:30px;font-size:11px}
+ body.immersive-play .key .sub{font-size:8px}
+}
