@@ -41,9 +41,12 @@
         "azertyuiop",
         "qsdfghjklm",
         "wxcvbn",
+        "AZERTYUIOP",
+        "QSDFGHJKLM",
+        "WXCVBN",
         "0123456789",
         "²&é\"'(-è_çà)=+",
-        "^$ù*;:!,?./<>%\\\\",
+        "^$ù*;:!,?./<>%\\",
         "£°§€@#{}[]|~"
       ];
       return groups.map(group => group.split("").sort(() => Math.random() - 0.5).join("")).join("   ");
