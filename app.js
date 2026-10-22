@@ -12,7 +12,7 @@
     advanced: ["La rapidité ne suffit pas : une saisie efficace demande aussi de la précision, de la concentration et une bonne connaissance du clavier AZERTY. Avec un entraînement régulier, les gestes deviennent plus naturels.","Les compétences numériques occupent une place importante dans les études et la vie professionnelle. Savoir saisir un texte avec fluidité permet de gagner du temps et de se concentrer sur le contenu plutôt que sur chaque touche."]
   };
   const rows = [
-    [{label:"²",sub:""},{label:"&",sub:"1"},{label:"é",sub:"2"},{label:""",sub:"3"},{label:"'",sub:"4"},{label:"(",sub:"5"},{label:"-",sub:"6"},{label:"è",sub:"7"},{label:"_",sub:"8"},{label:"ç",sub:"9"},{label:"à",sub:"0"},{label:")",sub:"°"},{label:"=",sub:"+"},{label:"⌫",sub:"Retour",wide:true}],
+    [{label:"²",sub:""},{label:"&",sub:"1"},{label:"é",sub:"2"},{label:"\\\"",sub:"3"},{label:"'",sub:"4"},{label:"(",sub:"5"},{label:"-",sub:"6"},{label:"è",sub:"7"},{label:"_",sub:"8"},{label:"ç",sub:"9"},{label:"à",sub:"0"},{label:")",sub:"°"},{label:"=",sub:"+"},{label:"⌫",sub:"Retour",wide:true}],
     [{label:"Tab",sub:"",wide:true},{label:"a",sub:"A"},{label:"z",sub:"Z"},{label:"e",sub:"E"},{label:"r",sub:"R"},{label:"t",sub:"T"},{label:"y",sub:"Y"},{label:"u",sub:"U"},{label:"i",sub:"I"},{label:"o",sub:"O"},{label:"p",sub:"P"},{label:"^",sub:"¨"},{label:"$",sub:"£",wide:true}],
     [{label:"⇪",sub:"Verr. Maj.",wide:true},{label:"q",sub:"Q"},{label:"s",sub:"S"},{label:"d",sub:"D"},{label:"f",sub:"F"},{label:"g",sub:"G"},{label:"h",sub:"H"},{label:"j",sub:"J"},{label:"k",sub:"K"},{label:"l",sub:"L"},{label:"m",sub:"M"},{label:"ù",sub:"%"},{label:"↵",sub:"Entrée",wide:true}],
     [{label:"⇧",sub:"Maj",wide:true},{label:"<",sub:">"},{label:"w",sub:"W"},{label:"x",sub:"X"},{label:"c",sub:"C"},{label:"v",sub:"V"},{label:"b",sub:"B"},{label:"n",sub:"N"},{label:",",sub:"?"},{label:";",sub:"."},{label:":",sub:"/"},{label:"!",sub:"§"},{label:"⇧",sub:"Maj",wide:true}],
@@ -29,7 +29,7 @@
   function makeTarget() {
     const level = $("difficulty").value, type = $("exercise-type").value;
     if (type === "text") return texts[level][Math.floor(Math.random()*texts[level].length)];
-    const pool = words[level].join(" ").split(/s+/);
+    const pool = words[level].join(" ").split(/\\s+/);
     const count = level === "beginner" ? 90 : level === "intermediate" ? 75 : 65;
     const out = [];
     for(let i=0;i<count;i++) out.push(pool[Math.floor(Math.random()*pool.length)]);
